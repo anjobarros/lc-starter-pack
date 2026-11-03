@@ -1,0 +1,66 @@
+---
+/**
+ * Horizontal wrapping cluster (buttons, badges, tags, logos).
+ */
+interface Props {
+	gap?: "tight" | "stack" | "loose";
+	as?: "div" | "ul" | "ol" | "section";
+	align?: "start" | "center" | "end" | "baseline" | "stretch";
+	class?: string;
+}
+
+const {
+	gap = "tight",
+	as: Tag = "div",
+	align = "center",
+	class: className,
+} = Astro.props;
+---
+
+<Tag
+	class:list={["cluster", className]}
+	data-gap={gap}
+	data-align={align}
+>
+	<slot />
+</Tag>
+
+<style>
+	.cluster {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.cluster[data-gap="tight"] {
+		gap: var(--space-stack-tight);
+	}
+
+	.cluster[data-gap="stack"] {
+		gap: var(--space-stack);
+	}
+
+	.cluster[data-gap="loose"] {
+		gap: var(--space-stack-loose);
+	}
+
+	.cluster[data-align="start"] {
+		align-items: flex-start;
+	}
+
+	.cluster[data-align="center"] {
+		align-items: center;
+	}
+
+	.cluster[data-align="end"] {
+		align-items: flex-end;
+	}
+
+	.cluster[data-align="baseline"] {
+		align-items: baseline;
+	}
+
+	.cluster[data-align="stretch"] {
+		align-items: stretch;
+	}
+</style>

@@ -1,0 +1,58 @@
+---
+/**
+ * Content-collection pages (legal / compliance scaffolds and static pages).
+ */
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/layouts/Section.astro";
+import Container from "../components/layouts/Container.astro";
+import Heading from "../components/atoms/Heading.astro";
+import Text from "../components/atoms/Text.astro";
+import Prose from "../components/content/Prose.astro";
+import Stack from "../components/content/Stack.astro";
+import { legalLinks } from "../data/navigation";
+
+export async function getStaticPaths() {
+	const pages = await getCollection("pages", ({ data }) => !data.draft);
+
+	return pages.map((page) => ({
+		params: { slug: page.id },
+		props: { page },
+	}));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const isLegalPage = legalLinks.some((link) => link.href === `/${page.id}`);
+---
+
+<BaseLayout
+	title={page.data.title}
+	description={page.data.description ?? `${page.data.title} — Starter`}
+>
+	<Section id={page.id}>
+		<Container width="narrow">
+			<Stack gap="loose">
+				<Stack gap="stack">
+					<Heading level={1}>{page.data.title}</Heading>
+					{
+						page.data.description ? (
+							<Text>{page.data.description}</Text>
+						) : null
+					}
+					{
+						isLegalPage ? (
+							<Text as="small">
+								Scaffold placeholder. Replace with reviewed legal copy before
+								launch.
+							</Text>
+						) : null
+					}
+				</Stack>
+				<Prose>
+					<Content />
+				</Prose>
+			</Stack>
+		</Container>
+	</Section>
+</BaseLayout>

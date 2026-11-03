@@ -1,0 +1,41 @@
+---
+/**
+ * Scaffold: contact info stack (address, phone, email, hours, etc.).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<address id={id} class:list={["contact-details", className]}>
+	<div class="contact-details__item">
+		<slot name="address" />
+	</div>
+	<div class="contact-details__item">
+		<slot name="phone" />
+	</div>
+	<div class="contact-details__item">
+		<slot name="email" />
+	</div>
+	<div class="contact-details__item">
+		<slot name="hours" />
+	</div>
+	<slot />
+</address>
+
+<style>
+	.contact-details {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		margin: 0;
+		font-style: normal;
+	}
+
+	.contact-details__item:empty {
+		display: none;
+	}
+</style>

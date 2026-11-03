@@ -1,0 +1,42 @@
+---
+/**
+ * Scaffold: media + optional caption (Image atom + text).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<figure id={id} class:list={["media-block", className]}>
+	<div class="media-block__media">
+		<slot name="media" />
+		<slot />
+	</div>
+	<figcaption class="media-block__caption">
+		<slot name="caption" />
+	</figcaption>
+</figure>
+
+<style>
+	.media-block {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		margin: 0;
+	}
+
+	.media-block__media {
+		min-width: 0;
+	}
+
+	.media-block__caption {
+		color: var(--color-text-muted);
+	}
+
+	.media-block__caption:empty {
+		display: none;
+	}
+</style>

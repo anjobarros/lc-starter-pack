@@ -1,0 +1,28 @@
+---
+description: Design tokens, semantic HTML, responsive and accessible styling conventions
+globs: "**/*.{css,scss,astro,tsx,jsx,vue,svelte},**/design-systems/**/*.md"
+alwaysApply: false
+---
+
+# Styling
+
+## Tokens
+
+- Use established project design tokens (CSS variables or token files).
+- Prefer reusable CSS variables over hardcoded colors, spacing, and type sizes.
+- Do not introduce an unrelated design system when the project already has one.
+- Brand values live in the project; Second Brain docs describe methodology only.
+
+## HTML & layout
+
+- Use semantic HTML.
+- Follow responsive principles; prefer intrinsic CSS (flex/grid/min/max/clamp) when sufficient.
+- Respect the section → container → column layout standard when building page sections.
+
+## Accessibility & motion
+
+- Maintain visible focus states.
+- Respect `prefers-reduced-motion`.
+- Ensure contrast and interactive hit targets meet project accessibility goals.
+
+Reference: `design-systems/` for token methodology.

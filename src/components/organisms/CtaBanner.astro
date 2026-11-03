@@ -1,0 +1,49 @@
+---
+/**
+ * Scaffold: call-to-action band (content + actions).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["cta-banner", className]}>
+	<div class="cta-banner__content">
+		<slot name="content" />
+	</div>
+	<div class="cta-banner__actions">
+		<slot name="actions" />
+	</div>
+	<slot />
+</div>
+
+<style>
+	.cta-banner {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.cta-banner__content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+
+	.cta-banner__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+
+	.cta-banner__content:empty,
+	.cta-banner__actions:empty {
+		display: none;
+	}
+</style>

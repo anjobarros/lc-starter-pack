@@ -1,0 +1,81 @@
+---
+/**
+ * Presentational site header: brand + text nav links.
+ */
+import Container from "../layouts/Container.astro";
+import Cluster from "../content/Cluster.astro";
+import Navigation from "./Navigation.astro";
+import type { NavLink } from "../../types/navigation";
+
+interface Props {
+	brand: string;
+	brandHref: string;
+	links: NavLink[];
+	id?: string;
+	class?: string;
+}
+
+const { brand, brandHref, links, id, class: className } = Astro.props;
+---
+
+<header id={id} class:list={["site-header", className]}>
+	<Container>
+		<Navigation>
+			<a slot="brand" class="site-header__brand" href={brandHref}>{brand}</a>
+			<Cluster slot="links" gap="stack" as="ul" class="site-header__links">
+				{
+					links.map((link) => (
+						<li>
+							<a class="site-header__link" href={link.href}>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</Cluster>
+		</Navigation>
+	</Container>
+</header>
+
+<style>
+	.site-header {
+		box-sizing: border-box;
+		width: 100%;
+		padding-block: var(--space-stack);
+		border-block-end: var(--border-width) var(--border-style) var(--color-border);
+		background-color: var(--color-background);
+	}
+
+	.site-header__brand {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-md);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-heading);
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.site-header__brand:hover {
+		color: var(--color-primary);
+	}
+
+	.site-header__links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: auto;
+	}
+
+	.site-header__link {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-body);
+		color: var(--color-text-muted);
+		text-decoration: none;
+	}
+
+	.site-header__link:hover {
+		color: var(--color-primary);
+	}
+</style>

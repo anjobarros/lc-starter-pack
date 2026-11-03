@@ -1,16 +1,24 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroSection from "../sections/HeroSection.astro";
+import Heading from "../components/atoms/Heading.astro";
+import Text from "../components/atoms/Text.astro";
+import Button from "../components/atoms/Button.astro";
+import Stack from "../components/content/Stack.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	title="Astro"
+	description="Starter pack with shared section, content, and component scaffolds."
+>
+	<HeroSection id="intro" width="narrow">
+		<Stack gap="stack" class="intro">
+			<Heading level={1}>Build With Clear Sections</Heading>
+			<Text>
+				Start from a shared wrapper and container, then compose content
+				with reusable atoms.
+			</Text>
+			<Button href="/brandkit">View Brand Kit</Button>
+		</Stack>
+	</HeroSection>
+</BaseLayout>

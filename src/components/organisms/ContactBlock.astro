@@ -1,0 +1,39 @@
+---
+/**
+ * Scaffold: contact block (header + details + optional form/media).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["contact-block", className]}>
+	<div class="contact-block__header">
+		<slot name="header" />
+	</div>
+	<div class="contact-block__details">
+		<slot name="details" />
+	</div>
+	<div class="contact-block__form">
+		<slot name="form" />
+	</div>
+	<slot />
+</div>
+
+<style>
+	.contact-block {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.contact-block__header:empty,
+	.contact-block__details:empty,
+	.contact-block__form:empty {
+		display: none;
+	}
+</style>

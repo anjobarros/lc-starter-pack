@@ -1,0 +1,1043 @@
+---
+import Badge from "../components/atoms/Badge.astro";
+import Button from "../components/atoms/Button.astro";
+import Heading from "../components/atoms/Heading.astro";
+import Icon from "../components/atoms/Icon.astro";
+import Image from "../components/atoms/Image.astro";
+import Input from "../components/atoms/Input.astro";
+import Text from "../components/atoms/Text.astro";
+import Cluster from "../components/content/Cluster.astro";
+import Grid from "../components/content/Grid.astro";
+import Stack from "../components/content/Stack.astro";
+import Container from "../components/layouts/Container.astro";
+import Section from "../components/layouts/Section.astro";
+import AccordionItem from "../components/molecules/AccordionItem.astro";
+import BaseCard from "../components/molecules/BaseCard.astro";
+import Breadcrumbs from "../components/molecules/Breadcrumbs.astro";
+import ButtonGroup from "../components/molecules/ButtonGroup.astro";
+import ContactDetails from "../components/molecules/ContactDetails.astro";
+import ContentBlock from "../components/molecules/ContentBlock.astro";
+import FeatureCard from "../components/molecules/FeatureCard.astro";
+import FormField from "../components/molecules/FormField.astro";
+import IconListItem from "../components/molecules/IconListItem.astro";
+import IconText from "../components/molecules/IconText.astro";
+import LogoGroup from "../components/molecules/LogoGroup.astro";
+import MediaBlock from "../components/molecules/MediaBlock.astro";
+import PostCard from "../components/molecules/PostCard.astro";
+import SectionHeading from "../components/molecules/SectionHeading.astro";
+import ServiceCard from "../components/molecules/ServiceCard.astro";
+import TeamCard from "../components/molecules/TeamCard.astro";
+import TestimonialCard from "../components/molecules/TestimonialCard.astro";
+import { brandkitToc } from "../data/brandkitToc";
+import "../styles/global.css";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Brandkit</title>
+	</head>
+	<body>
+		<div class="brandkit">
+			<aside class="brandkit__aside" aria-labelledby="heading-toc">
+				<nav class="brandkit__toc" aria-labelledby="heading-toc">
+					<Heading level={2} id="heading-toc">Contents</Heading>
+					<ul class="brandkit__toc-list">
+						{
+							brandkitToc.map((item) =>
+								item.children?.length ? (
+									<li>
+										<details class="brandkit__toc-group" open>
+											<summary class="brandkit__toc-summary">
+												<a
+													class="brandkit__toc-link brandkit__toc-link--parent"
+													href={item.href}
+												>
+													{item.label}
+												</a>
+											</summary>
+											<ul class="brandkit__toc-list brandkit__toc-list--nested">
+												{item.children.map((child) => (
+													<li>
+														<a class="brandkit__toc-link" href={child.href}>
+															{child.label}
+														</a>
+													</li>
+												))}
+											</ul>
+										</details>
+									</li>
+								) : (
+									<li>
+										<a class="brandkit__toc-link" href={item.href}>
+											{item.label}
+										</a>
+									</li>
+								),
+							)
+						}
+					</ul>
+				</nav>
+			</aside>
+
+			<main class="brandkit__main">
+				<Section id="intro" aria-labelledby="heading-brandkit">
+					<Container>
+						<Heading level={1} id="heading-brandkit">Brandkit</Heading>
+						<Text>Atom, molecule, and content-layout reference for this project.</Text>
+					</Container>
+				</Section>
+
+				<Section id="atoms" aria-labelledby="heading-atoms">
+					<Container>
+						<ContentBlock>
+							<Heading slot="title" level={2} id="heading-atoms">Atoms</Heading>
+							<Text slot="body">
+								Single-purpose UI primitives. Each atom has one job, exposes typed props,
+								and is composed into molecules — never rebuilt inside page markup.
+							</Text>
+						</ContentBlock>
+					</Container>
+
+					<Container class="atom-container" id="atom-heading" aria-labelledby="heading-heading">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-heading">Heading</Heading>
+							<Text slot="body">
+								Use for page and section titles. Structure: a semantic <code>h1</code>–<code>h6</code>
+								via the <code>level</code> prop, with label text in the default slot. Keep one
+								<code>h1</code> per page; section titles usually start at <code>h2</code>.
+							</Text>
+						</ContentBlock>
+						<div class="atom-demo">
+							<Heading level={1}>Heading level 1</Heading>
+							<Heading level={2}>Heading level 2</Heading>
+							<Heading level={3}>Heading level 3</Heading>
+							<Heading level={4}>Heading level 4</Heading>
+							<Heading level={5}>Heading level 5</Heading>
+							<Heading level={6}>Heading level 6</Heading>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-text" aria-labelledby="heading-text">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-text">Text</Heading>
+							<Text slot="body">
+								Use for body and inline copy. Structure: a single text node rendered as
+								<code>p</code>, <code>span</code>, <code>strong</code>, <code>em</code>, or
+								<code>small</code> through the <code>as</code> prop. Prefer this atom over raw
+								paragraphs so typography stays token-driven.
+							</Text>
+						</ContentBlock>
+						<div class="atom-demo">
+							<Text>Paragraph text</Text>
+							<Text as="span">Inline span text</Text>
+							<Text as="strong">Strong text</Text>
+							<Text as="em">Emphasized text</Text>
+							<Text as="small">Small text</Text>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-button" aria-labelledby="heading-button">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-button">Button</Heading>
+							<Text slot="body">
+								Use for actions and CTA links. Structure: renders a <code>button</code> or an
+								<code>a</code> when <code>href</code> is set; shared <code>variant</code>
+								(<code>primary</code> / <code>outline</code>), optional leading/trailing
+								<code>Icon</code> children, and disabled/hover states on the same styles.
+							</Text>
+						</ContentBlock>
+						<div class="atom-demo atom-demo--row">
+							<Button type="button">Primary</Button>
+							<Button type="button" variant="outline">Outline</Button>
+							<Button type="button">
+								<Icon name="add-outline" label="Add" size={20} />
+								Icon left
+							</Button>
+							<Button type="button" variant="outline">
+								Icon right
+								<Icon name="arrow-forward-outline" label="Arrow" size={20} />
+							</Button>
+							<Button href="/">Link button</Button>
+							<Button href="/" variant="outline">Outline link</Button>
+							<Button disabled>Disabled</Button>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-badge" aria-labelledby="heading-badge">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-badge">Badge</Heading>
+							<Text slot="body">
+								Use for status, counts, and short labels — not for actions. Structure: appearance
+								via <code>variant</code> (<code>soft</code> / <code>solid</code> / <code>outline</code>)
+								and meaning via <code>tone</code>; optional <code>size</code>, status <code>dot</code>,
+								and icon/text in the default slot.
+							</Text>
+						</ContentBlock>
+
+						<div class="atom-demo">
+							<Text as="strong">Soft</Text>
+							<div class="atom-demo atom-demo--row">
+								<Badge>Neutral</Badge>
+								<Badge tone="primary">Primary</Badge>
+								<Badge tone="success">Success</Badge>
+								<Badge tone="warning">Warning</Badge>
+								<Badge tone="danger">Danger</Badge>
+								<Badge tone="info">Info</Badge>
+							</div>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">Solid</Text>
+							<div class="atom-demo atom-demo--row">
+								<Badge variant="solid">Neutral</Badge>
+								<Badge variant="solid" tone="primary">Primary</Badge>
+								<Badge variant="solid" tone="success">Success</Badge>
+								<Badge variant="solid" tone="warning">Warning</Badge>
+								<Badge variant="solid" tone="danger">Danger</Badge>
+								<Badge variant="solid" tone="info">Info</Badge>
+							</div>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">Outline</Text>
+							<div class="atom-demo atom-demo--row">
+								<Badge variant="outline">Neutral</Badge>
+								<Badge variant="outline" tone="primary">Primary</Badge>
+								<Badge variant="outline" tone="success">Success</Badge>
+								<Badge variant="outline" tone="warning">Warning</Badge>
+								<Badge variant="outline" tone="danger">Danger</Badge>
+								<Badge variant="outline" tone="info">Info</Badge>
+							</div>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">Size, dot, icon</Text>
+							<div class="atom-demo atom-demo--row">
+								<Badge size="sm" tone="primary">Small</Badge>
+								<Badge size="md" tone="primary">Medium</Badge>
+								<Badge tone="success" dot>Online</Badge>
+								<Badge tone="warning" dot>Away</Badge>
+								<Badge tone="danger" dot>Offline</Badge>
+								<Badge tone="info">
+									<Icon name="add-outline" label="New" size={12} />
+									New
+								</Badge>
+								<Badge variant="outline" tone="primary">3</Badge>
+							</div>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-input" aria-labelledby="heading-input">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-input">Input</Heading>
+							<Text slot="body">
+								Use as the raw form control atom. Structure: a native <code>input</code> with a
+								single outline medium style, <code>type</code>, and <code>status</code>
+								(<code>default</code> / <code>error</code> / <code>success</code>). Labels, hints,
+								and errors belong in the <code>FormField</code> molecule around this atom.
+							</Text>
+						</ContentBlock>
+
+						<div class="atom-demo">
+							<Text as="strong">Types</Text>
+							<Grid class="atom-demo__grid" columns={3} gap="stack">
+								<div class="field">
+									<label class="field__label" for="brandkit-text">Text</label>
+									<Input id="brandkit-text" name="text" type="text" placeholder="Enter text" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-email">Email</label>
+									<Input id="brandkit-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-password">Password</label>
+									<Input id="brandkit-password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-search">Search</label>
+									<Input id="brandkit-search" name="search" type="search" placeholder="Search…" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-tel">Telephone</label>
+									<Input id="brandkit-tel" name="tel" type="tel" placeholder="+1 555 000 0000" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-url">URL</label>
+									<Input id="brandkit-url" name="url" type="url" placeholder="https://example.com" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-number">Number</label>
+									<Input id="brandkit-number" name="number" type="number" min={0} max={100} step={1} placeholder="0" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-date">Date</label>
+									<Input id="brandkit-date" name="date" type="date" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-time">Time</label>
+									<Input id="brandkit-time" name="time" type="time" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-file">File</label>
+									<Input id="brandkit-file" name="file" type="file" accept="image/*,.pdf" />
+								</div>
+							</Grid>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">States</Text>
+							<Grid class="atom-demo__grid" columns={3} gap="stack">
+								<div class="field">
+									<label class="field__label" for="brandkit-default">Default</label>
+									<Input id="brandkit-default" name="default" placeholder="Default input" />
+									<p class="field__hint" id="brandkit-default-hint">Helper text for additional context.</p>
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-required">Required</label>
+									<Input id="brandkit-required" name="required" required placeholder="Required input" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-readonly">Readonly</label>
+									<Input id="brandkit-readonly" name="readonly" readonly value="Readonly value" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-disabled">Disabled</label>
+									<Input id="brandkit-disabled" name="disabled" disabled value="Disabled value" />
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-error">Error</label>
+									<Input
+										id="brandkit-error"
+										name="error"
+										status="error"
+										value="Invalid value"
+										ariaDescribedby="brandkit-error-hint"
+									/>
+									<p class="field__hint field__hint--error" id="brandkit-error-hint">Please enter a valid value.</p>
+								</div>
+								<div class="field">
+									<label class="field__label" for="brandkit-success">Success</label>
+									<Input
+										id="brandkit-success"
+										name="success"
+										status="success"
+										value="Looks good"
+										ariaDescribedby="brandkit-success-hint"
+									/>
+									<p class="field__hint field__hint--success" id="brandkit-success-hint">Input looks valid.</p>
+								</div>
+							</Grid>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">Choice controls</Text>
+							<div class="atom-demo atom-demo--row">
+								<label class="choice">
+									<Input id="brandkit-checkbox" name="checkbox" type="checkbox" />
+									Checkbox
+								</label>
+								<label class="choice">
+									<Input id="brandkit-checkbox-checked" name="checkbox-checked" type="checkbox" checked />
+									Checked
+								</label>
+								<label class="choice">
+									<Input id="brandkit-checkbox-disabled" name="checkbox-disabled" type="checkbox" disabled />
+									Disabled
+								</label>
+								<label class="choice">
+									<Input id="brandkit-radio-a" name="radio-demo" type="radio" value="a" checked />
+									Radio A
+								</label>
+								<label class="choice">
+									<Input id="brandkit-radio-b" name="radio-demo" type="radio" value="b" />
+									Radio B
+								</label>
+							</div>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-image" aria-labelledby="heading-image">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-image">Image</Heading>
+							<Text slot="body">
+								Use for responsive media with reserved space. Structure: a frame that holds an
+								optional <code>img</code>, with <code>width</code>/<code>height</code> or
+								<code>ratio</code>, <code>fit</code> (<code>cover</code> / <code>contain</code>),
+								and a skeleton state when <code>src</code> is missing, loading, or broken.
+							</Text>
+						</ContentBlock>
+
+						<div class="atom-demo">
+							<Text as="strong">Loaded</Text>
+							<div class="atom-demo atom-demo--row">
+								<Image src="/favicon.svg" alt="Project favicon" width={96} height={96} fit="contain" />
+								<Image
+									src="/favicon.svg"
+									alt="Wide favicon crop"
+									width={240}
+									height={135}
+									fit="cover"
+								/>
+							</div>
+						</div>
+
+						<div class="atom-demo">
+							<Text as="strong">Unavailable (skeleton)</Text>
+							<div class="atom-demo atom-demo--row">
+								<Image alt="Missing image placeholder" width={96} height={96} />
+								<Image alt="Broken image placeholder" src="/does-not-exist.png" width={240} height={135} />
+								<Image alt="Default ratio skeleton" ratio="16 / 9" class="image-demo-wide" />
+							</div>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="atom-icon" aria-labelledby="heading-icon">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-icon">Icon</Heading>
+							<Text slot="body">
+								Use for decorative or labeled glyphs next to actions and copy. Structure: pass
+								<code>name</code> to inline an SVG from <code>src/icons/</code> (Ionicons outline
+								demo set), or provide custom SVG via the default slot. Set <code>size</code> and
+								optional <code>label</code> for accessibility; omit <code>label</code> when decorative.
+							</Text>
+						</ContentBlock>
+						<div class="atom-demo atom-demo--row icon-demo">
+							<Icon name="add-outline" label="Add" />
+							<Icon name="arrow-forward-outline" label="Arrow forward" />
+							<Icon name="search-outline" label="Search" />
+							<Icon name="checkmark-outline" label="Checkmark" />
+							<Icon name="close-outline" label="Close" />
+							<Icon name="heart-outline" label="Heart" />
+							<Icon name="home-outline" label="Home" />
+							<Icon name="mail-outline" label="Mail" />
+							<Icon name="person-outline" label="Person" />
+							<Icon name="settings-outline" label="Settings" />
+							<Icon name="warning-outline" label="Warning" />
+							<Icon name="image-outline" label="Image" />
+							<Icon name="star-outline" label="Star" />
+							<Icon name="trash-outline" label="Trash" />
+							<Icon name="menu-outline" label="Menu" />
+							<Icon name="information-circle-outline" label="Information" />
+						</div>
+						<div class="atom-demo atom-demo--row icon-demo">
+							<Icon name="home-outline" label="Home small" size={16} />
+							<Icon name="home-outline" label="Home medium" size={24} />
+							<Icon name="home-outline" label="Home large" size={32} />
+						</div>
+					</Container>
+				</Section>
+
+				<Section id="molecules" aria-labelledby="heading-molecules">
+					<Container>
+						<Heading level={2} id="heading-molecules">Molecules</Heading>
+						<Text>Composed atom patterns used as reusable content blocks.</Text>
+					</Container>
+
+					<Container class="atom-container" id="molecule-content-block" aria-labelledby="heading-content-block">
+						<Heading level={3} id="heading-content-block">ContentBlock</Heading>
+						<ContentBlock>
+							<Badge slot="eyebrow" tone="primary">Eyebrow</Badge>
+							<Heading slot="title" level={3}>Content block title</Heading>
+							<Text slot="body">Short supporting copy for a flexible content stack.</Text>
+						</ContentBlock>
+					</Container>
+
+					<Container class="atom-container" id="molecule-section-heading" aria-labelledby="heading-section-heading">
+						<Heading level={3} id="heading-section-heading">SectionHeading</Heading>
+						<SectionHeading>
+							<Badge slot="eyebrow" tone="info">Section</Badge>
+							<Heading slot="title" level={3}>Section heading</Heading>
+							<Text slot="description">Intro copy used above a section’s content.</Text>
+						</SectionHeading>
+					</Container>
+
+					<Container class="atom-container" id="molecule-button-group" aria-labelledby="heading-button-group">
+						<Heading level={3} id="heading-button-group">ButtonGroup</Heading>
+						<div class="atom-demo">
+							<ButtonGroup>
+								<Button>Primary</Button>
+								<Button variant="outline">Secondary</Button>
+							</ButtonGroup>
+							<ButtonGroup orientation="vertical">
+								<Button>Stacked primary</Button>
+								<Button variant="outline">Stacked secondary</Button>
+							</ButtonGroup>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="molecule-icon-text" aria-labelledby="heading-icon-text">
+						<Heading level={3} id="heading-icon-text">IconText</Heading>
+						<IconText>
+							<Icon slot="icon" name="checkmark-outline" label="Included" />
+							<Heading slot="title" level={4}>Icon with text</Heading>
+							<Text slot="body">Useful for feature rows and benefit lists.</Text>
+						</IconText>
+					</Container>
+
+					<Container class="atom-container" id="molecule-media-block" aria-labelledby="heading-media-block">
+						<Heading level={3} id="heading-media-block">MediaBlock</Heading>
+						<MediaBlock>
+							<Image slot="media" src="/favicon.svg" alt="Sample media" width={160} height={160} fit="contain" />
+							<Text slot="caption">Optional caption under media.</Text>
+						</MediaBlock>
+					</Container>
+
+					<Container class="atom-container" id="molecule-base-card" aria-labelledby="heading-base-card">
+						<Heading level={3} id="heading-base-card">BaseCard</Heading>
+						<BaseCard href="/brandkit">
+							<Image slot="media" src="/favicon.svg" alt="" width={120} height={80} fit="contain" />
+							<ContentBlock slot="body">
+								<Heading slot="title" level={4}>Base card</Heading>
+								<Text slot="body">Generic card shell for other card molecules.</Text>
+							</ContentBlock>
+							<Text slot="footer" as="small">Optional footer</Text>
+						</BaseCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-feature-card" aria-labelledby="heading-feature-card">
+						<Heading level={3} id="heading-feature-card">FeatureCard</Heading>
+						<FeatureCard>
+							<Icon slot="media" name="star-outline" label="Feature" size={28} />
+							<ContentBlock slot="body">
+								<Heading slot="title" level={4}>Feature title</Heading>
+								<Text slot="body">Highlight a product capability or benefit.</Text>
+							</ContentBlock>
+							<Button slot="footer" variant="outline" href="/brandkit">Learn more</Button>
+						</FeatureCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-icon-list-item" aria-labelledby="heading-icon-list-item">
+						<Heading level={3} id="heading-icon-list-item">IconListItem</Heading>
+						<ul class="molecule-list">
+							<IconListItem>
+								<Icon slot="media" name="checkmark-outline" label="Done" />
+								<ContentBlock slot="body">
+									<Text slot="title" as="strong">List item title</Text>
+									<Text slot="body">Supporting detail for the list row.</Text>
+								</ContentBlock>
+							</IconListItem>
+							<IconListItem>
+								<Icon slot="media" name="arrow-forward-outline" label="Next" />
+								<ContentBlock slot="body">
+									<Text slot="title" as="strong">Another item</Text>
+								</ContentBlock>
+							</IconListItem>
+						</ul>
+					</Container>
+
+					<Container class="atom-container" id="molecule-form-field" aria-labelledby="heading-form-field">
+						<Heading level={3} id="heading-form-field">FormField</Heading>
+						<Stack gap="loose">
+							<FormField for="brandkit-field-default">
+								<span slot="label">Full name</span>
+								<Input id="brandkit-field-default" name="full-name" placeholder="Jane Doe" />
+								<span slot="hint">Helper text under the control.</span>
+							</FormField>
+							<FormField for="brandkit-field-error" status="error" required>
+								<span slot="label">Email</span>
+								<Input id="brandkit-field-error" name="email-error" type="email" status="error" value="not-an-email" />
+								<span slot="error">Enter a valid email address.</span>
+							</FormField>
+						</Stack>
+					</Container>
+
+					<Container class="atom-container" id="molecule-service-card" aria-labelledby="heading-service-card">
+						<Heading level={3} id="heading-service-card">ServiceCard</Heading>
+						<ServiceCard>
+							<Icon slot="media" name="settings-outline" label="Service" size={28} />
+							<div slot="body">
+								<Badge tone="primary">Popular</Badge>
+								<ContentBlock>
+									<Heading slot="title" level={4}>Service name</Heading>
+									<Text slot="body">Short description of the service offering.</Text>
+								</ContentBlock>
+							</div>
+							<Button slot="footer" href="/brandkit" variant="outline">View service</Button>
+						</ServiceCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-testimonial-card" aria-labelledby="heading-testimonial-card">
+						<Heading level={3} id="heading-testimonial-card">TestimonialCard</Heading>
+						<TestimonialCard>
+							<ContentBlock slot="body">
+								<Text slot="body">“This starter pack made our front-end work much clearer.”</Text>
+							</ContentBlock>
+							<Image slot="avatar" src="/favicon.svg" alt="" width={40} height={40} fit="contain" />
+							<Text slot="name" as="strong">Alex Rivera</Text>
+							<Text slot="role" as="small">Product Designer</Text>
+						</TestimonialCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-post-card" aria-labelledby="heading-post-card">
+						<Heading level={3} id="heading-post-card">PostCard</Heading>
+						<PostCard>
+							<Image slot="media" src="/favicon.svg" alt="" width={200} height={112} fit="contain" />
+							<div slot="body">
+								<Text as="small">News · Nov 3, 2026</Text>
+								<ContentBlock>
+									<Heading slot="title" level={4}>Post title</Heading>
+									<Text slot="body">Brief excerpt that previews the article content.</Text>
+								</ContentBlock>
+							</div>
+							<Button slot="footer" variant="outline" href="/brandkit">Read more</Button>
+						</PostCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-team-card" aria-labelledby="heading-team-card">
+						<Heading level={3} id="heading-team-card">TeamCard</Heading>
+						<TeamCard>
+							<Image slot="media" src="/favicon.svg" alt="Team member" width={120} height={120} fit="contain" />
+							<ContentBlock slot="body">
+								<Heading slot="title" level={4}>Sam Chen</Heading>
+								<Text slot="body">Engineering Lead. Builds systems and design foundations.</Text>
+							</ContentBlock>
+							<ButtonGroup slot="footer">
+								<Button href="/" variant="outline" ariaLabel="Mail">
+									<Icon name="mail-outline" size={16} />
+								</Button>
+								<Button href="/" variant="outline" ariaLabel="Profile">
+									<Icon name="person-outline" size={16} />
+								</Button>
+							</ButtonGroup>
+						</TeamCard>
+					</Container>
+
+					<Container class="atom-container" id="molecule-accordion-item" aria-labelledby="heading-accordion-item">
+						<Heading level={3} id="heading-accordion-item">AccordionItem</Heading>
+						<div class="atom-demo atom-demo--stretch">
+							<AccordionItem name="brandkit-faq" open>
+								<span slot="title">What is a molecule?</span>
+								<Text slot="body">A focused combination of atoms with one responsibility.</Text>
+							</AccordionItem>
+							<AccordionItem name="brandkit-faq">
+								<span slot="title">When should I use one?</span>
+								<Text slot="body">When the same atom grouping repeats across pages.</Text>
+							</AccordionItem>
+						</div>
+					</Container>
+
+					<Container class="atom-container" id="molecule-breadcrumbs" aria-labelledby="heading-breadcrumbs">
+						<Heading level={3} id="heading-breadcrumbs">Breadcrumbs</Heading>
+						<Breadcrumbs>
+							<li><a href="/">Home</a></li>
+							<li><a href="/brandkit">Brandkit</a></li>
+							<li aria-current="page">Molecules</li>
+						</Breadcrumbs>
+					</Container>
+
+					<Container class="atom-container" id="molecule-logo-group" aria-labelledby="heading-logo-group">
+						<Heading level={3} id="heading-logo-group">LogoGroup</Heading>
+						<LogoGroup label="Partner logos">
+							<Image src="/favicon.svg" alt="Logo A" width={48} height={48} fit="contain" />
+							<Image src="/favicon.svg" alt="Logo B" width={48} height={48} fit="contain" />
+							<Image src="/favicon.svg" alt="Logo C" width={48} height={48} fit="contain" />
+						</LogoGroup>
+					</Container>
+
+					<Container class="atom-container" id="molecule-contact-details" aria-labelledby="heading-contact-details">
+						<Heading level={3} id="heading-contact-details">ContactDetails</Heading>
+						<ContactDetails>
+							<Text slot="address">123 Example Street, Manila</Text>
+							<a slot="phone" href="tel:+630000000000">+63 000 000 0000</a>
+							<a slot="email" href="mailto:hello@example.com">hello@example.com</a>
+							<Text slot="hours">Mon–Fri, 9:00–18:00</Text>
+						</ContactDetails>
+					</Container>
+				</Section>
+
+				<Section id="content" aria-labelledby="heading-content">
+					<Container>
+						<ContentBlock>
+							<Heading slot="title" level={2} id="heading-content">Content</Heading>
+							<Text slot="body">
+								Internal layout primitives for stacking, wrapping, and multi-column content
+								inside a Container. Use Stack, Cluster, and Grid — not Section/Container — for
+								flex and grid inside page content.
+							</Text>
+						</ContentBlock>
+					</Container>
+
+					<Container class="atom-container" id="content-stack" aria-labelledby="heading-stack">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-stack">Stack</Heading>
+							<Text slot="body">
+								Vertical rhythm. Parent owns spacing with <code>gap</code>
+								(<code>tight</code> / <code>stack</code> / <code>loose</code> →
+								<code>--space-stack-*</code>). No child margins between siblings.
+							</Text>
+						</ContentBlock>
+						<Stack gap="stack">
+							<Heading level={4}>Stacked heading</Heading>
+							<Text>Body copy sits below with stack gap.</Text>
+							<Button variant="outline" href="/brandkit">Stacked action</Button>
+						</Stack>
+					</Container>
+
+					<Container class="atom-container" id="content-cluster" aria-labelledby="heading-cluster">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-cluster">Cluster</Heading>
+							<Text slot="body">
+								Horizontal wrapping row for related atoms (buttons, badges, tags). Default gap is
+								<code>tight</code>.
+							</Text>
+						</ContentBlock>
+						<Cluster gap="tight">
+							<Button>Primary</Button>
+							<Button variant="outline">Outline</Button>
+							<Badge tone="primary">Primary</Badge>
+							<Badge tone="success">Success</Badge>
+							<Badge variant="outline" tone="info">Info</Badge>
+						</Cluster>
+					</Container>
+
+					<Container class="atom-container" id="content-grid" aria-labelledby="heading-grid">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-grid">Grid</Heading>
+							<Text slot="body">
+								Responsive multi-column layout via <code>auto-fit</code> + <code>minmax</code>
+								(or fixed <code>columns</code>). Default gap is <code>loose</code>. No Column
+								primitive required.
+							</Text>
+						</ContentBlock>
+						<Grid gap="loose" min="14rem">
+							<FeatureCard>
+								<Icon slot="media" name="star-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Grid item one</Heading>
+									<Text slot="body">Cards compose inside Grid without custom column markup.</Text>
+								</ContentBlock>
+							</FeatureCard>
+							<FeatureCard>
+								<Icon slot="media" name="checkmark-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Grid item two</Heading>
+									<Text slot="body">Gap comes from the Grid parent, not card margins.</Text>
+								</ContentBlock>
+							</FeatureCard>
+							<FeatureCard>
+								<Icon slot="media" name="settings-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Grid item three</Heading>
+									<Text slot="body">Use inside a Container slot for section content.</Text>
+								</ContentBlock>
+							</FeatureCard>
+						</Grid>
+					</Container>
+				</Section>
+			</main>
+		</div>
+	</body>
+</html>
+
+<script>
+	const tocLinks = Array.from(
+		document.querySelectorAll<HTMLAnchorElement>(".brandkit__toc-link[href^='#']"),
+	);
+
+	document.querySelectorAll(".brandkit__toc-summary a").forEach((link) => {
+		link.addEventListener("click", (event) => {
+			event.stopPropagation();
+		});
+	});
+
+	const setActiveLink = (id: string) => {
+		tocLinks.forEach((link) => {
+			const isActive = link.getAttribute("href") === `#${id}`;
+			link.classList.toggle("is-active", isActive);
+
+			if (isActive) {
+				link.setAttribute("aria-current", "location");
+				const group = link.closest("details.brandkit__toc-group");
+				if (group instanceof HTMLDetailsElement) group.open = true;
+			} else {
+				link.removeAttribute("aria-current");
+			}
+		});
+	};
+
+	const targets = tocLinks
+		.map((link) => {
+			const id = link.getAttribute("href")?.slice(1);
+			return id ? document.getElementById(id) : null;
+		})
+		.filter((el): el is HTMLElement => Boolean(el));
+
+	if (targets.length > 0) {
+		const visible = new Map<string, number>();
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = entry.target.id;
+					if (entry.isIntersecting) {
+						visible.set(id, entry.intersectionRatio);
+					} else {
+						visible.delete(id);
+					}
+				}
+
+				const activeId = [...visible.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+				if (activeId) setActiveLink(activeId);
+			},
+			{
+				rootMargin: "-20% 0px -60% 0px",
+				threshold: [0, 0.25, 0.5, 1],
+			},
+		);
+
+		targets.forEach((target) => observer.observe(target));
+
+		const hashId = window.location.hash.slice(1);
+		if (hashId && document.getElementById(hashId)) {
+			setActiveLink(hashId);
+		} else if (targets[0]) {
+			setActiveLink(targets[0].id);
+		}
+	}
+</script>
+
+<style>
+	.brandkit {
+		display: grid;
+		grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+		align-items: start;
+		min-height: 100vh;
+	}
+
+	.brandkit__aside {
+		position: sticky;
+		top: 0;
+		align-self: start;
+		max-height: 100vh;
+		overflow: auto;
+		padding: var(--space-3) var(--space-2);
+		border-inline-end: var(--border-default);
+		background-color: var(--color-surface);
+	}
+
+	.brandkit__toc {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+	}
+
+	.brandkit__toc-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-tight);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.brandkit__toc-list--nested {
+		padding-block-start: var(--space-stack-tight);
+		padding-inline-start: var(--space-stack);
+	}
+
+	.brandkit__toc-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.brandkit__toc-summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-stack-tight);
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.brandkit__toc-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.brandkit__toc-summary::after {
+		content: "";
+		flex-shrink: 0;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-inline-end: 1.5px solid currentColor;
+		border-block-end: 1.5px solid currentColor;
+		transform: rotate(45deg);
+		transition: transform var(--duration-fast) var(--ease-standard);
+	}
+
+	.brandkit__toc-group[open] > .brandkit__toc-summary::after {
+		transform: rotate(225deg);
+	}
+
+	.brandkit__toc-link {
+		display: block;
+		padding-block: var(--space-stack-tight);
+		color: var(--color-link);
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-heading);
+		text-decoration: none;
+	}
+
+	.brandkit__toc-link--parent {
+		flex: 1 1 auto;
+		min-width: 0;
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.brandkit__toc-list--nested .brandkit__toc-link {
+		padding-block: calc(var(--space-stack-tight) / 2);
+		color: var(--color-text-muted);
+	}
+
+	.brandkit__toc-link:hover,
+	.brandkit__toc-link:focus-visible {
+		color: var(--color-primary);
+	}
+
+	.brandkit__toc-link.is-active,
+	.brandkit__toc-link[aria-current="location"] {
+		color: var(--color-primary);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.brandkit__toc-list--nested .brandkit__toc-link.is-active,
+	.brandkit__toc-list--nested .brandkit__toc-link[aria-current="location"] {
+		color: var(--color-primary);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brandkit__toc-summary::after {
+			transition: none;
+		}
+	}
+
+	.brandkit__main {
+		min-width: 0;
+	}
+
+	:global(.atom-container) {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		padding: var(--space-5);
+		border: var(--border-default);
+		border-radius: var(--radius-lg);
+		background-color: var(--color-surface);
+	}
+
+	:global(.atom-container .content-block) {
+		max-width: 42rem;
+	}
+
+	:global(.atom-container .content-block .text),
+	:global(.atom-container .content-block p) {
+		color: var(--color-text-muted);
+	}
+
+	.atom-demo {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-stack);
+		width: 100%;
+		margin: 0;
+	}
+
+	.atom-demo--row {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+
+	.atom-demo--stretch {
+		align-items: stretch;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--space-stack-tight);
+		width: 100%;
+		min-width: 0;
+	}
+
+	:global(.atom-demo__grid) {
+		width: 100%;
+	}
+
+	@media screen and (max-width: 768px) {
+		:global(.atom-demo__grid) {
+			--grid-template-columns: 1fr;
+		}
+	}
+
+	.field__label {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.field__hint {
+		margin: 0;
+		font-size: var(--font-size-xs);
+		color: var(--color-text-muted);
+	}
+
+	.field__hint--error {
+		color: var(--color-danger);
+	}
+
+	.field__hint--success {
+		color: var(--color-success);
+	}
+
+	.choice {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-stack-tight);
+		font-size: var(--font-size-sm);
+		cursor: pointer;
+	}
+
+	:global(.image-demo-wide) {
+		width: min(100%, 28rem);
+	}
+
+	.icon-demo {
+		color: var(--color-text);
+		font-size: var(--font-size-lg);
+	}
+
+	.molecule-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media screen and (max-width: 768px) {
+		.brandkit {
+			grid-template-columns: 1fr;
+		}
+
+		.brandkit__aside {
+			position: static;
+			max-height: none;
+			border-inline-end: none;
+			border-block-end: var(--border-default);
+		}
+	}
+</style>

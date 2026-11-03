@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Font faces (existing project loading approach)
+   ========================================================================== */
+
+@font-face {
+	font-family: "Jost";
+	src: url("/fonts/jost/Jost-Variable.ttf") format("truetype");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Jost";
+	src: url("/fonts/jost/Jost-Italic-Variable.ttf") format("truetype");
+	font-weight: 100 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Sorts Mill Goudy";
+	src: url("/fonts/sorts-mill-goudy/SortsMillGoudy-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Sorts Mill Goudy";
+	src: url("/fonts/sorts-mill-goudy/SortsMillGoudy-Italic.ttf") format("truetype");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* ==========================================================================
+   Design tokens
+   Direction: vibrant, modern, minimal, editorial, flat — 8px grid, no shadows
+   ========================================================================== */
+
+:root {
+	/* --------------------------------------------------------------------------
+	   Color
+	   -------------------------------------------------------------------------- */
+	--color-primary: #08a7dc;
+	--color-primary-soft: #e5f7fc;
+	--color-accent: #0686b0;
+	--color-background: #ffffff;
+	--color-surface: #ffffff;
+	--color-surface-elevated: #e6e6e7;
+	--color-text: #000000;
+	--color-text-muted: #808486;
+	--color-text-inverse: #ffffff;
+	--color-link: #808486;
+	--color-border: #e6e6e7;
+	--color-border-strong: #808486;
+
+	--color-success: #2f9e44;
+	--color-success-soft: #e8f7eb;
+	--color-warning: #e67700;
+	--color-warning-soft: #fff4e5;
+	--color-danger: #e03131;
+	--color-danger-soft: #ffe3e3;
+	--color-info: #1971c2;
+	--color-info-soft: #e7f5ff;
+
+	/* Brand gradient: #96C941 → #08A7DC @ 135deg */
+	--gradient-brand-start: #96c941;
+	--gradient-brand-end: #08a7dc;
+	--gradient-brand: linear-gradient(
+		135deg,
+		var(--gradient-brand-start),
+		var(--gradient-brand-end)
+	);
+
+	/* --------------------------------------------------------------------------
+	   Typography — families
+	   -------------------------------------------------------------------------- */
+	--font-family-primary: "Jost", sans-serif;
+	--font-family-display: "Sorts Mill Goudy", serif;
+
+	/* --------------------------------------------------------------------------
+	   Typography — size scale
+	   -------------------------------------------------------------------------- */
+	--font-size-xs: 12px;
+	--font-size-sm: 14px;
+	--font-size-md: 18px;
+	--font-size-lg: 24px;
+	--font-size-xl: 30px;
+	--font-size-2xl: 48px;
+	--font-size-3xl: 72px;
+
+	/* --------------------------------------------------------------------------
+	   Typography — weights
+	   -------------------------------------------------------------------------- */
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	/* --------------------------------------------------------------------------
+	   Typography — line heights
+	   -------------------------------------------------------------------------- */
+	--line-height-tight: 1.1;
+	--line-height-heading: 1.2;
+	--line-height-body: 1.5;
+
+	/* --------------------------------------------------------------------------
+	   Typography — semantic roles (descending size hierarchy)
+	   -------------------------------------------------------------------------- */
+	/* H1: page title — Sorts Mill Goudy / 72px */
+	--text-h1-font-family: var(--font-family-display);
+	--text-h1-font-size: var(--font-size-3xl);
+	--text-h1-font-weight: var(--font-weight-regular);
+	--text-h1-line-height: var(--line-height-tight);
+	--text-h1-letter-spacing: -1.8px;
+
+	/* H2: section title — Sorts Mill Goudy / 48px */
+	--text-h2-font-family: var(--font-family-display);
+	--text-h2-font-size: var(--font-size-2xl);
+	--text-h2-font-weight: var(--font-weight-regular);
+	--text-h2-line-height: var(--line-height-tight);
+	--text-h2-letter-spacing: -1px;
+
+	/* H3: subsection / block title — Sorts Mill Goudy / 30px */
+	--text-h3-font-family: var(--font-family-display);
+	--text-h3-font-size: var(--font-size-xl);
+	--text-h3-font-weight: var(--font-weight-regular);
+	--text-h3-line-height: var(--line-height-heading);
+	--text-h3-letter-spacing: normal;
+
+	/* H4: card / component title — Jost / 24px */
+	--text-h4-font-family: var(--font-family-primary);
+	--text-h4-font-size: var(--font-size-lg);
+	--text-h4-font-weight: var(--font-weight-semibold);
+	--text-h4-line-height: var(--line-height-heading);
+	--text-h4-letter-spacing: normal;
+
+	/* H5: Jost / 18px */
+	--text-h5-font-family: var(--font-family-primary);
+	--text-h5-font-size: var(--font-size-md);
+	--text-h5-font-weight: var(--font-weight-semibold);
+	--text-h5-line-height: var(--line-height-heading);
+	--text-h5-letter-spacing: normal;
+
+	/* H6: Jost / 14px */
+	--text-h6-font-family: var(--font-family-primary);
+	--text-h6-font-size: var(--font-size-sm);
+	--text-h6-font-weight: var(--font-weight-semibold);
+	--text-h6-line-height: var(--line-height-heading);
+	--text-h6-letter-spacing: normal;
+
+	/* Body: Jost / 18px / 400 / 1.5 — sits under H4 visually */
+	--text-body-font-family: var(--font-family-primary);
+	--text-body-font-size: var(--font-size-md);
+	--text-body-font-weight: var(--font-weight-regular);
+	--text-body-line-height: var(--line-height-body);
+	--text-body-letter-spacing: normal;
+
+	/* --------------------------------------------------------------------------
+	   Spacing — 8px grid
+	   -------------------------------------------------------------------------- */
+	--space-0: 0;
+	--space-1: 8px;
+	--space-2: 16px;
+	--space-3: 24px;
+	--space-4: 32px;
+	--space-5: 40px;
+	--space-6: 48px;
+	--space-8: 64px;
+	--space-10: 80px;
+	--space-12: 96px;
+
+	/* Semantic stack roles (Second Brain composition; values on this 8px scale) */
+	--space-stack-tight: var(--space-1); /* 8px — atoms inside a molecule */
+	--space-stack: var(--space-2); /* 16px — parts inside a content molecule */
+	--space-stack-loose: var(--space-3); /* 24px — sibling molecules */
+	--space-section-y: var(--space-8); /* 64px — section block padding */
+
+	/* --------------------------------------------------------------------------
+	   Layout & sizing
+	   -------------------------------------------------------------------------- */
+	--container-max-width: 1536px;
+	--container-narrow-width: 850px;
+	--container-gutter: var(--space-2); /* 16px */
+	--section-padding-block: var(--space-section-y);
+	--section-padding-inline: var(--space-2); /* 16px gutters */
+	--section-container-gap: var(--space-4); /* 32px — sibling containers in one Section */
+	--content-width-sm: 640px;
+	--content-width-md: 768px;
+	--content-width-lg: 1024px;
+	--size-full: 100%;
+
+	/* --------------------------------------------------------------------------
+	   Borders & radius
+	   -------------------------------------------------------------------------- */
+	--border-width: 1px;
+	--border-style: solid;
+	--border-color: var(--color-border);
+	--border-default: var(--border-width) var(--border-style) var(--border-color);
+
+	--radius-none: 0;
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius-full: 9999px;
+
+	--shadow-none: none;
+
+	/* --------------------------------------------------------------------------
+	   Motion
+	   -------------------------------------------------------------------------- */
+	--duration-fast: 150ms;
+	--duration-normal: 300ms;
+	--duration-slow: 700ms;
+	--ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+	--transition-color: color var(--duration-normal) var(--ease-standard);
+	--transition-background: background-color var(--duration-normal) var(--ease-standard);
+	--transition-border: border-color var(--duration-normal) var(--ease-standard);
+	--transition-default:
+		var(--transition-color),
+		var(--transition-background),
+		var(--transition-border);
+
+	/* --------------------------------------------------------------------------
+	   Breakpoints (reference only — do not use var() in @media conditions)
+	   SM:  640px
+	   MD:  768px
+	   LG:  1024px
+	   XL:  1280px
+	   2XL: 1536px
+	   -------------------------------------------------------------------------- */
+
+	/* --------------------------------------------------------------------------
+	   Z-index
+	   -------------------------------------------------------------------------- */
+	--z-base: 0;
+	--z-content: 1;
+	--z-dropdown: 100;
+	--z-overlay: 1000;
+	--z-modal: 1002;
+	--z-navigation: 1100;
+}

@@ -1,0 +1,75 @@
+---
+/**
+ * Page shell: document head + header / main / footer slots.
+ */
+import "../styles/global.css";
+import SkipLink from "../components/layouts/SkipLink.astro";
+import Header from "../components/organisms/Header.astro";
+import Footer from "../components/organisms/Footer.astro";
+import {
+	footerNav,
+	legalLinks,
+	mainNav,
+	siteBrand,
+	socialLinks,
+} from "../data/navigation";
+
+interface Props {
+	title: string;
+	description?: string;
+	lang?: string;
+}
+
+const {
+	title,
+	description = "",
+	lang = "en",
+} = Astro.props;
+
+const hasHeaderSlot = Astro.slots.has("header");
+const hasFooterSlot = Astro.slots.has("footer");
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		{description ? <meta name="description" content={description} /> : null}
+		<title>{title}</title>
+		<slot name="head" />
+	</head>
+	<body>
+		<SkipLink />
+		{
+			hasHeaderSlot ? (
+				<slot name="header" />
+			) : (
+				<Header
+					brand={siteBrand.label}
+					brandHref={siteBrand.href}
+					links={mainNav}
+				/>
+			)
+		}
+		<main id="main">
+			<slot />
+		</main>
+		{
+			hasFooterSlot ? (
+				<slot name="footer" />
+			) : (
+				<Footer
+					brand={siteBrand.label}
+					brandHref={siteBrand.href}
+					groups={footerNav}
+					legal={legalLinks}
+					social={socialLinks}
+				/>
+			)
+		}
+	</body>
+</html>

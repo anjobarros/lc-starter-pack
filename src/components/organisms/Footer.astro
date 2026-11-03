@@ -1,0 +1,178 @@
+---
+/**
+ * Basic site footer: brand + nav groups + legal / social links.
+ */
+import Container from "../layouts/Container.astro";
+import Cluster from "../content/Cluster.astro";
+import type { NavGroup, NavLink } from "../../types/navigation";
+
+interface Props {
+	brand: string;
+	brandHref: string;
+	groups: NavGroup[];
+	legal?: NavLink[];
+	social?: NavLink[];
+	id?: string;
+	class?: string;
+}
+
+const {
+	brand,
+	brandHref,
+	groups,
+	legal = [],
+	social = [],
+	id,
+	class: className,
+} = Astro.props;
+---
+
+<footer id={id} class:list={["site-footer", className]}>
+	<Container>
+		<div class="site-footer__primary">
+			<a class="site-footer__brand" href={brandHref}>{brand}</a>
+			<nav class="site-footer__nav" aria-label="Footer">
+				{
+					groups.map((group) => (
+						<div class="site-footer__group">
+							<p class="site-footer__group-title">{group.title}</p>
+							<Cluster gap="stack" as="ul" class="site-footer__list">
+								{group.links.map((link) => (
+									<li>
+										<a class="site-footer__link" href={link.href}>
+											{link.label}
+										</a>
+									</li>
+								))}
+							</Cluster>
+						</div>
+					))
+				}
+			</nav>
+		</div>
+		{
+			legal.length > 0 || social.length > 0 ? (
+				<div class="site-footer__meta">
+					{legal.length > 0 ? (
+						<ul class="site-footer__legal">
+							{legal.map((link) => (
+								<li>
+									<a class="site-footer__link" href={link.href}>
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					) : null}
+					{social.length > 0 ? (
+						<ul class="site-footer__social">
+							{social.map((link) => (
+								<li>
+									<a class="site-footer__link" href={link.href}>
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					) : null}
+				</div>
+			) : null
+		}
+	</Container>
+</footer>
+
+<style>
+	.site-footer {
+		box-sizing: border-box;
+		width: 100%;
+		padding-block: var(--space-stack-loose);
+		border-block-start: var(--border-width) var(--border-style) var(--color-border);
+		background-color: var(--color-background);
+	}
+
+	.site-footer__primary {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.site-footer__brand {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-md);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-heading);
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.site-footer__brand:hover {
+		color: var(--color-primary);
+	}
+
+	.site-footer__nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-stack-loose);
+	}
+
+	.site-footer__group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-tight);
+		min-width: 8rem;
+	}
+
+	.site-footer__group-title {
+		margin: 0;
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.site-footer__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: auto;
+	}
+
+	.site-footer__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-stack);
+		width: 100%;
+		margin-block-start: var(--space-stack-loose);
+		padding-block-start: var(--space-stack);
+		border-block-start: var(--border-width) var(--border-style) var(--color-border);
+	}
+
+	.site-footer__legal,
+	.site-footer__social {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.site-footer__link {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-body);
+		color: var(--color-text-muted);
+		text-decoration: none;
+	}
+
+	.site-footer__link:hover {
+		color: var(--color-primary);
+	}
+</style>

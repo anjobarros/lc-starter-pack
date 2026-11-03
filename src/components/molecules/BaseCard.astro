@@ -1,0 +1,81 @@
+---
+/**
+ * Generic card shell: media → body → footer.
+ * Pass ContentBlock (and optional meta) into `body`; CTAs into `footer`.
+ */
+interface Props {
+	as?: "article" | "div" | "li";
+	href?: string;
+	id?: string;
+	class?: string;
+}
+
+const { as: Tag = "article", href, id, class: className } = Astro.props;
+const isLink = typeof href === "string" && href.length > 0;
+---
+
+<Tag id={id} class:list={["base-card", className]}>
+	{
+		isLink ? (
+			<a class="base-card__link" href={href}>
+				<div class="base-card__media">
+					<slot name="media" />
+				</div>
+				<div class="base-card__body">
+					<slot name="body" />
+				</div>
+				<div class="base-card__footer">
+					<slot name="footer" />
+				</div>
+			</a>
+		) : (
+			<>
+				<div class="base-card__media">
+					<slot name="media" />
+				</div>
+				<div class="base-card__body">
+					<slot name="body" />
+				</div>
+				<div class="base-card__footer">
+					<slot name="footer" />
+				</div>
+			</>
+		)
+	}
+</Tag>
+
+<style>
+	.base-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+
+	.base-card__link {
+		display: flex;
+		flex-direction: column;
+		gap: inherit;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.base-card__media:empty,
+	.base-card__footer:empty {
+		display: none;
+	}
+
+	.base-card__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+
+	.base-card__footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+</style>

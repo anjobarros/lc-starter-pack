@@ -1,0 +1,52 @@
+---
+/**
+ * Scaffold: hero content (intro + media/actions). Not a Section wrapper.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["hero", className]}>
+	<div class="hero__content">
+		<slot name="content" />
+		<div class="hero__actions">
+			<slot name="actions" />
+		</div>
+	</div>
+	<div class="hero__media">
+		<slot name="media" />
+	</div>
+	<slot />
+</div>
+
+<style>
+	.hero {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.hero__content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		min-width: 0;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+
+	.hero__actions:empty,
+	.hero__media:empty {
+		display: none;
+	}
+</style>

@@ -1,0 +1,42 @@
+---
+/**
+ * Scaffold: icon + text pair (Icon + Text/Heading atoms).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["icon-text", className]}>
+	<span class="icon-text__icon">
+		<slot name="icon" />
+	</span>
+	<div class="icon-text__content">
+		<slot name="title" />
+		<slot name="body" />
+		<slot />
+	</div>
+</div>
+
+<style>
+	.icon-text {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-stack-tight);
+	}
+
+	.icon-text__icon {
+		flex-shrink: 0;
+		line-height: 0;
+	}
+
+	.icon-text__content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+</style>

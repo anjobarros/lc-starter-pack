@@ -1,0 +1,57 @@
+---
+/**
+ * Scaffold: split media + content (not a Section). Compose ContentBlock + Image/MediaBlock.
+ */
+interface Props {
+	reverse?: boolean;
+	id?: string;
+	class?: string;
+}
+
+const { reverse = false, id, class: className } = Astro.props;
+---
+
+<div
+	id={id}
+	class:list={["media-split", className]}
+	data-reverse={reverse ? "true" : undefined}
+>
+	<div class="media-split__media">
+		<slot name="media" />
+	</div>
+	<div class="media-split__content">
+		<slot name="content" />
+		<div class="media-split__actions">
+			<slot name="actions" />
+		</div>
+	</div>
+	<slot />
+</div>
+
+<style>
+	.media-split {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.media-split__content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		min-width: 0;
+	}
+
+	.media-split__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+
+	.media-split__media:empty,
+	.media-split__actions:empty {
+		display: none;
+	}
+</style>

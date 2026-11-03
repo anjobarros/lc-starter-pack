@@ -1,0 +1,878 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/layouts/Section.astro";
+import Container from "../components/layouts/Container.astro";
+import Heading from "../components/atoms/Heading.astro";
+import Text from "../components/atoms/Text.astro";
+import Button from "../components/atoms/Button.astro";
+import Stack from "../components/content/Stack.astro";
+import Prose from "../components/content/Prose.astro";
+import SectionHeading from "../components/molecules/SectionHeading.astro";
+import ContentBlock from "../components/molecules/ContentBlock.astro";
+import ButtonGroup from "../components/molecules/ButtonGroup.astro";
+import { docsToc } from "../data/docsToc";
+---
+
+<BaseLayout
+	title="Docs"
+	description="How this Astro starter pack was created, how to use it, and how to redesign it for a client — aligned with Second Brain standards."
+>
+	<div class="docs">
+		<aside class="docs__aside" aria-labelledby="heading-toc">
+				<nav class="docs__toc" aria-labelledby="heading-toc">
+					<Heading level={2} id="heading-toc">Contents</Heading>
+					<ul class="docs__toc-list">
+						{
+							docsToc.map((item) =>
+								item.children?.length ? (
+									<li>
+										<details class="docs__toc-group" open>
+											<summary class="docs__toc-summary">
+												<a class="docs__toc-link docs__toc-link--parent" href={item.href}>
+													{item.label}
+												</a>
+											</summary>
+											<ul class="docs__toc-list docs__toc-list--nested">
+												{item.children.map((child) => (
+													<li>
+														<a class="docs__toc-link" href={child.href}>
+															{child.label}
+														</a>
+													</li>
+												))}
+											</ul>
+										</details>
+									</li>
+								) : (
+									<li>
+										<a class="docs__toc-link" href={item.href}>
+											{item.label}
+										</a>
+									</li>
+								),
+							)
+						}
+					</ul>
+				</nav>
+			</aside>
+		<div class="docs__main">
+			<Section id="docs" aria-labelledby="heading-docs">
+				<Container width="narrow" id="intro">
+					<Stack gap="loose">
+						<SectionHeading>
+							<Heading slot="title" level={1} id="heading-docs">Docs</Heading>
+							<Text slot="description">
+								How this starter was created, how to use it, and how to redesign it
+								for a client — aligned with Second Brain standards.
+							</Text>
+						</SectionHeading>
+						<ButtonGroup>
+							<Button href="/brandkit">Open Brand Kit</Button>
+							<Button href="/" variant="outline">Home</Button>
+						</ButtonGroup>
+					</Stack>
+				</Container>
+	<Container width="narrow" id="created">
+			<Stack gap="loose">
+				<SectionHeading>
+					<Text slot="eyebrow" as="span">Part 1</Text>
+					<Heading slot="title" level={2} id="heading-created">
+						How this starter was created
+					</Heading>
+				</SectionHeading>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-purpose">Purpose</Heading>
+					<Text slot="body">
+						This repo is a local-first Astro marketing starter. It encodes Second
+						Brain conventions so new client sites start with a shared structure
+						instead of reinventing folders, section layout, spacing, and
+						navigation each time.
+					</Text>
+					<Text>
+						Second Brain is the methodology (architecture, design-system docs,
+						Cursor rules/skills). This starter holds project values: brand
+						tokens, real components, sample content, and site link data.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-standardized">What was standardized</Heading>
+					<Prose slot="body">
+						<table>
+							<thead>
+								<tr>
+									<th>Concern</th>
+									<th>Convention in this pack</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>UI layers</td>
+									<td>Atomic Design: <code>atoms/</code> → <code>molecules/</code> → <code>organisms/</code></td>
+								</tr>
+								<tr>
+									<td>Section layout</td>
+									<td>One Wrapper (<code>Section</code>) → one or more Containers; sibling containers use wrapper <code>gap</code></td>
+								</tr>
+								<tr>
+									<td>Molecule structure</td>
+									<td>Role regions: <code>media</code> | <code>body</code> | <code>footer</code> (reuse ContentBlock / ButtonGroup)</td>
+								</tr>
+								<tr>
+									<td>Spacing</td>
+									<td>Semantic stack roles via parent <code>gap</code> — not golden-ratio math or sibling margins</td>
+								</tr>
+								<tr>
+									<td>Site links</td>
+									<td>Typed data in <code>src/data/navigation.ts</code> (<code>NavLink</code> / <code>NavGroup</code>)</td>
+								</tr>
+								<tr>
+									<td>Local content</td>
+									<td>Astro Content Collections (<code>pages</code>, <code>posts</code>)</td>
+								</tr>
+								<tr>
+									<td>Live catalog</td>
+									<td><a href="/brandkit">Brand Kit</a> — atoms, molecules, content primitives</td>
+								</tr>
+							</tbody>
+						</table>
+					</Prose>
+					<Text>
+						Layout primitives live under <code>src/components/layouts/</code>.
+						Flex/grid helpers live under <code>src/components/content/</code> —
+						not as a Column atom.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-second-brain">Relationship to Second Brain</Heading>
+					<Stack slot="body" gap="stack" as="ul" class="docs-list">
+						<li>
+							<Text as="span">
+								<strong>Second Brain</strong> — architecture, design-system docs,
+								Cursor rules/skills, and memory solutions.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								<strong>This starter</strong> — brand CSS tokens, component
+								implementations, <code>PROJECT.second-brain.md</code>, and
+								overrides that do not fight shared standards.
+							</Text>
+						</li>
+					</Stack>
+					<Text>
+						Cursor does not auto-load rules from a sibling Second Brain repo.
+						This project has <code>.cursor/rules/</code> pointers. For a new
+						client clone, open both repos or run Second Brain
+						<code>npm run project:init -- &lt;path&gt;</code>. See Second Brain
+						<code>docs/cursor-integration.md</code>.
+					</Text>
+				</ContentBlock>
+
+				<Stack gap="loose">
+					<ContentBlock>
+						<Heading slot="title" level={3} id="heading-brand-kit">Brand Kit</Heading>
+						<Text slot="body">
+							Use the Brand Kit as the interactive component catalog while
+							building. Prefer matching an existing atom or molecule before
+							inventing a new one.
+						</Text>
+					</ContentBlock>
+					<ButtonGroup>
+						<Button href="/brandkit" variant="outline">View Brand Kit</Button>
+					</ButtonGroup>
+				</Stack>
+			</Stack>
+		</Container>
+	<Container width="narrow" id="use">
+			<Stack gap="loose">
+				<SectionHeading>
+					<Text slot="eyebrow" as="span">Part 2</Text>
+					<Heading slot="title" level={2} id="heading-use">How to use it</Heading>
+				</SectionHeading>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-install">Install and scripts</Heading>
+					<Text slot="body">
+						Requires Node <code>&gt;= 22.23.4</code> (<code>package.json</code>{" "}
+						engines).
+					</Text>
+					<Prose>
+						<pre><code>npm install
+npm run dev       # astro dev
+npm run build     # astro build (static)
+npm run preview   # astro preview</code></pre>
+					</Prose>
+					<Text>
+						Optional: <code>npx astro sync</code> after changing{" "}
+						<code>src/content.config.ts</code> or adding collection entries.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-project-map">Project map</Heading>
+					<Prose slot="body">
+						<pre><code>{`src/
+├── components/
+│   ├── atoms/
+│   ├── molecules/
+│   ├── organisms/
+│   ├── layouts/         # Section, Container, SkipLink
+│   └── content/         # Stack, Cluster, Grid, …
+├── sections/
+├── layouts/             # BaseLayout
+├── pages/               # index, brandkit, docs, [slug]
+├── data/                # navigation.ts, docsToc.ts, brandkitToc.ts
+├── content/             # pages/*.md, posts/*.md
+├── content.config.ts
+├── types/
+├── lib/
+├── icons/
+└── styles/`}</code></pre>
+					</Prose>
+					<Text>
+						Also at repo root: <code>PROJECT.second-brain.md</code>,{" "}
+						<code>AGENTS.md</code>, <code>.cursor/rules/</code>.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-layout">Layout — one wrapper, multiple containers</Heading>
+					<Prose slot="body">
+						<pre><code>{`Section (wrapper <section id>)
+├── Container width="default" | "narrow" | "full"
+│   └── molecules / organisms / content primitives
+└── Container (optional — spaced by --section-container-gap)`}</code></pre>
+					</Prose>
+					<Stack gap="stack" as="ul" class="docs-list">
+						<li>
+							<Text as="span">
+								<code>id</code> is required on <code>Section</code>;{" "}
+								<code>width</code> lives on each <code>Container</code>.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Do not rebuild max-width wrappers inside organisms.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Multi-column layouts use <code>Grid</code> / <code>Switcher</code>{" "}
+								/ <code>Cluster</code> — no Column atom.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								<code>BaseLayout</code> supplies SkipLink, Header/Footer from nav
+								data, and <code>main#main</code>.
+							</Text>
+						</li>
+					</Stack>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-components">Components — Atomic Design</Heading>
+					<Stack slot="body" gap="stack">
+						<Text>
+							<strong>Atoms</strong> — one job. Prefer variants over duplicate
+							atoms.
+						</Text>
+						<Text>
+							<strong>Molecules</strong> — regions by role when media, meaning,
+							and actions exist:
+						</Text>
+						<Prose>
+							<pre><code>{`Molecule root
+├── media / header   → Icon, Image, eyebrow
+├── body             → ContentBlock; Badge/meta if needed
+└── footer / actions → Button / ButtonGroup`}</code></pre>
+						</Prose>
+						<Text>
+							Do not put the CTA in body next to title/copy. Reuse ContentBlock
+							and ButtonGroup. Stack regions with parent gap.
+						</Text>
+						<Text>
+							<strong>Organisms</strong> — presentational compositions (Header,
+							Footer, grids). They receive data/slots; they do not own site menu
+							defaults.
+						</Text>
+						<Text>
+							<strong>Icons</strong> — SVGs in <code>src/icons/</code>.{" "}
+							<code>{`<Icon name="add-outline" label="Add" />`}</code>; omit{" "}
+							<code>label</code> when decorative.
+						</Text>
+					</Stack>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-primitives">Content primitives</Heading>
+					<Prose slot="body">
+						<table>
+							<thead>
+								<tr>
+									<th>Component</th>
+									<th>Role</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>Stack</code></td>
+									<td>Vertical stack; gap = tight | stack | loose</td>
+								</tr>
+								<tr>
+									<td><code>Cluster</code></td>
+									<td>Wrapping horizontal row</td>
+								</tr>
+								<tr>
+									<td><code>Grid</code></td>
+									<td>Responsive columns</td>
+								</tr>
+								<tr>
+									<td><code>Switcher</code></td>
+									<td>Side-by-side until threshold</td>
+								</tr>
+								<tr>
+									<td><code>Center</code> / <code>Prose</code></td>
+									<td>Measure / rich text</td>
+								</tr>
+								<tr>
+									<td><code>Frame</code></td>
+									<td>Aspect-ratio media</td>
+								</tr>
+							</tbody>
+						</table>
+					</Prose>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-spacing">Spacing — semantic stack roles</Heading>
+					<Text slot="body">
+						Parent owns spacing with gap, not sibling margins. Pick a role, not
+						a calculated ratio.
+					</Text>
+					<Prose>
+						<table>
+							<thead>
+								<tr>
+									<th>Role</th>
+									<th>Token</th>
+									<th>Typical use</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Tight</td>
+									<td><code>--space-stack-tight</code></td>
+									<td>Atoms inside one molecule</td>
+								</tr>
+								<tr>
+									<td>Stack</td>
+									<td><code>--space-stack</code></td>
+									<td>Heading ↔ body in a content molecule</td>
+								</tr>
+								<tr>
+									<td>Loose</td>
+									<td><code>--space-stack-loose</code></td>
+									<td>Sibling molecules (block ↔ CTAs)</td>
+								</tr>
+								<tr>
+									<td>Section Y</td>
+									<td><code>--space-section-y</code></td>
+									<td>Section block padding (64px)</td>
+								</tr>
+								<tr>
+									<td>Container gap</td>
+									<td><code>--section-container-gap</code></td>
+									<td>Sibling containers in one Section (32px)</td>
+								</tr>
+							</tbody>
+						</table>
+					</Prose>
+					<Text>
+						Change values in <code>src/styles/tokens.css</code>; keep token names
+						stable. No golden-ratio spacing math.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-navigation">Navigation — typed data</Heading>
+					<Prose slot="body">
+						<pre><code>{`src/types/navigation.ts  → NavLink, NavGroup
+src/data/navigation.ts   → siteBrand, mainNav, footerNav, …
+        ↓
+BaseLayout → Header / Footer props → map to <a>`}</code></pre>
+					</Prose>
+					<Stack gap="stack" as="ul" class="docs-list">
+						<li>
+							<Text as="span">
+								Header/Footer are presentational — no hardcoded menu defaults
+								inside organisms.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								One-off card/section CTAs stay as page props — not in{" "}
+								<code>navigation.ts</code>.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Brandkit TOC: <code>src/data/brandkitToc.ts</code>. This page:
+								<code>src/data/docsToc.ts</code>.
+							</Text>
+						</li>
+					</Stack>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-collections">Content collections</Heading>
+					<Prose slot="body">
+						<table>
+							<thead>
+								<tr>
+									<th>Collection</th>
+									<th>Files</th>
+									<th>Routes</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>pages</code></td>
+									<td><code>src/content/pages/*.md</code></td>
+									<td><code>/[slug]</code> via <code>[slug].astro</code></td>
+								</tr>
+								<tr>
+									<td><code>posts</code></td>
+									<td><code>src/content/posts/*.md</code></td>
+									<td>Not routed yet</td>
+								</tr>
+							</tbody>
+						</table>
+					</Prose>
+					<Stack gap="stack" as="ol" class="docs-list">
+						<li>
+							<Text as="span">
+								Add <code>src/content/pages/my-page.md</code> with{" "}
+								<code>title</code>, optional <code>description</code>,{" "}
+								<code>draft: false</code>.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">It becomes <code>/my-page</code>.</Text>
+						</li>
+						<li>
+							<Text as="span">
+								If it 404s in <code>astro dev</code> but build works: stop the
+								server, optionally <code>npx astro sync</code>, restart{" "}
+								<code>npm run dev</code>, hard-refresh (stale content-collection
+								store).
+							</Text>
+						</li>
+					</Stack>
+					<Text>
+						Legal scaffolds (<code>/privacy</code>, <code>/terms</code>,{" "}
+						<code>/cookies</code>, <code>/accessibility</code>) are pages-collection
+						entries linked from <code>legalLinks</code>.
+					</Text>
+				</ContentBlock>
+
+				<Stack gap="loose">
+					<ContentBlock>
+						<Heading slot="title" level={3} id="heading-demo-ui">Where to demo UI</Heading>
+					</ContentBlock>
+					<ButtonGroup>
+						<Button href="/brandkit">Brand Kit</Button>
+						<Button href="/" variant="outline">Home</Button>
+					</ButtonGroup>
+				</Stack>
+			</Stack>
+		</Container>
+	<Container width="narrow" id="redesign">
+			<Stack gap="loose">
+				<SectionHeading>
+					<Text slot="eyebrow" as="span">Part 3</Text>
+					<Heading slot="title" level={2} id="heading-redesign">
+						How to redesign for a client project
+					</Heading>
+					<Text slot="description">
+						Playbook for turning this starter into a real brand site.
+					</Text>
+				</SectionHeading>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-context">1. Fill project context</Heading>
+					<Text slot="body">
+						Edit <code>PROJECT.second-brain.md</code>: overview, architecture,
+						design-system location, component inventory, data sources,
+						constraints, and conventions.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-tokens">2. Replace design tokens (keep names)</Heading>
+					<Text slot="body">
+						Update values in <code>src/styles/tokens.css</code> (colors, type,
+						stack roles, container widths). Keep token names and stack roles —
+						changing names breaks Section, Stack, and molecules. Do not hardcode
+						hex in components when a semantic token exists.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-nav-data">3. Update navigation data</Heading>
+					<Text slot="body">
+						Edit <code>src/data/navigation.ts</code> (
+						<code>siteBrand</code>, <code>mainNav</code>, <code>footerNav</code>,{" "}
+						<code>socialLinks</code>, <code>legalLinks</code>). Add hrefs only for
+						routes that exist or that you are about to add.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-atoms">4. Restyle atoms via variants first</Heading>
+					<Text slot="body">
+						Extend Button, Badge, Input with variants before creating parallel
+						atoms. Check Brand Kit. Prefer composition over giant conditional
+						organisms.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-compose">5. Compose sections — do not rebuild wrappers</Heading>
+					<Prose slot="body">
+						<pre><code>{`<Section id="services">
+  <Container>
+    {/* SectionHeading / ContentBlock / ServiceGrid */}
+  </Container>
+</Section>`}</code></pre>
+					</Prose>
+					<Text>
+						Or reuse <code>src/sections/*</code> wrappers. Molecule regions: media
+						→ body (ContentBlock) → footer (Button / ButtonGroup). Parent gap with
+						stack roles.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-content">6. Replace sample content</Heading>
+					<Text slot="body">
+						Swap Markdown under <code>src/content/pages/</code> and{" "}
+						<code>src/content/posts/</code>. Keep Zod schemas unless you
+						intentionally extend them. After new collection pages, restart{" "}
+						<code>astro dev</code> or run <code>npx astro sync</code>.
+					</Text>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-cms">7. Wire CMS later (fetch → normalize → props)</Heading>
+					<Stack slot="body" gap="stack" as="ol" class="docs-list">
+						<li>
+							<Text as="span">Fetch in <code>src/lib/</code> (not in atoms).</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Normalize to stable view models — including{" "}
+								<code>NavLink[]</code> / <code>NavGroup[]</code> for menus.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Render the same Header/Footer/sections from props. Handle
+								empty/error states at the page boundary.
+							</Text>
+						</li>
+					</Stack>
+				</ContentBlock>
+
+				<ContentBlock>
+					<Heading slot="title" level={3} id="heading-a11y">8. Accessibility and minimal client JS</Heading>
+					<Stack slot="body" gap="stack" as="ul" class="docs-list">
+						<li>
+							<Text as="span">
+								Semantic HTML; visible focus; labels on inputs; text
+								alternatives for meaningful images.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Respect <code>prefers-reduced-motion</code>.
+							</Text>
+						</li>
+						<li>
+							<Text as="span">
+								Prefer zero client JS; islands only when interactivity requires
+								hydration.
+							</Text>
+						</li>
+					</Stack>
+				</ContentBlock>
+			</Stack>
+		</Container>
+	<Container width="narrow" id="reference">
+			<Stack gap="loose">
+				<SectionHeading>
+					<Heading slot="title" level={2} id="heading-reference">
+						Quick reference
+					</Heading>
+				</SectionHeading>
+				<Prose>
+					<table>
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Brand colors / type / space</td>
+								<td><code>src/styles/tokens.css</code></td>
+							</tr>
+							<tr>
+								<td>Site menus</td>
+								<td><code>src/data/navigation.ts</code></td>
+							</tr>
+							<tr>
+								<td>Nav types</td>
+								<td><code>src/types/navigation.ts</code></td>
+							</tr>
+							<tr>
+								<td>Page shell</td>
+								<td><code>src/layouts/BaseLayout.astro</code></td>
+							</tr>
+							<tr>
+								<td>Section system</td>
+								<td>
+									<code>Section.astro</code> + <code>Container.astro</code>
+								</td>
+							</tr>
+							<tr>
+								<td>Live UI catalog</td>
+								<td><a href="/brandkit">/brandkit</a></td>
+							</tr>
+							<tr>
+								<td>Static Markdown pages</td>
+								<td><code>src/content/pages/</code> → <code>/[slug]</code></td>
+							</tr>
+							<tr>
+								<td>Project brief</td>
+								<td><code>PROJECT.second-brain.md</code></td>
+							</tr>
+							<tr>
+								<td>Shared methodology</td>
+								<td>Sibling Second Brain repo</td>
+							</tr>
+						</tbody>
+					</table>
+				</Prose>
+			</Stack>
+		</Container>
+			</Section>
+		</div>
+	</div>
+</BaseLayout>
+
+
+<script>
+	const tocLinks = Array.from(
+		document.querySelectorAll<HTMLAnchorElement>(".docs__toc-link[href^='#']"),
+	);
+
+	document.querySelectorAll(".docs__toc-summary a").forEach((link) => {
+		link.addEventListener("click", (event) => {
+			event.stopPropagation();
+		});
+	});
+
+	const setActiveLink = (id: string) => {
+		tocLinks.forEach((link) => {
+			const isActive = link.getAttribute("href") === `#${id}`;
+			link.classList.toggle("is-active", isActive);
+
+			if (isActive) {
+				link.setAttribute("aria-current", "location");
+				const group = link.closest("details.docs__toc-group");
+				if (group instanceof HTMLDetailsElement) group.open = true;
+			} else {
+				link.removeAttribute("aria-current");
+			}
+		});
+	};
+
+	const targets = tocLinks
+		.map((link) => {
+			const id = link.getAttribute("href")?.slice(1);
+			return id ? document.getElementById(id) : null;
+		})
+		.filter((el): el is HTMLElement => Boolean(el));
+
+	if (targets.length > 0) {
+		const visible = new Map<string, number>();
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = entry.target.id;
+					if (entry.isIntersecting) {
+						visible.set(id, entry.intersectionRatio);
+					} else {
+						visible.delete(id);
+					}
+				}
+
+				const activeId = [...visible.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+				if (activeId) setActiveLink(activeId);
+			},
+			{
+				rootMargin: "-20% 0px -60% 0px",
+				threshold: [0, 0.25, 0.5, 1],
+			},
+		);
+
+		targets.forEach((target) => observer.observe(target));
+
+		const hashId = window.location.hash.slice(1);
+		if (hashId && document.getElementById(hashId)) {
+			setActiveLink(hashId);
+		} else if (targets[0]) {
+			setActiveLink(targets[0].id);
+		}
+	}
+</script>
+
+<style>
+	.docs {
+		display: grid;
+		grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+		align-items: start;
+		width: 100%;
+	}
+
+	.docs__aside {
+		position: sticky;
+		top: 0;
+		align-self: start;
+		max-height: 100vh;
+		overflow: auto;
+		padding: var(--space-stack-loose) var(--space-stack);
+		border-inline-end: var(--border-default);
+		background-color: var(--color-surface);
+	}
+
+	.docs__toc {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+	}
+
+	.docs__toc-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-tight);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.docs__toc-list--nested {
+		padding-block-start: var(--space-stack-tight);
+		padding-inline-start: var(--space-stack);
+	}
+
+	.docs__toc-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.docs__toc-summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-stack-tight);
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.docs__toc-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.docs__toc-summary::after {
+		content: "";
+		flex-shrink: 0;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-inline-end: 1.5px solid currentColor;
+		border-block-end: 1.5px solid currentColor;
+		transform: rotate(45deg);
+		transition: transform var(--duration-fast) var(--ease-standard);
+	}
+
+	.docs__toc-group[open] > .docs__toc-summary::after {
+		transform: rotate(225deg);
+	}
+
+	.docs__toc-link {
+		display: block;
+		padding-block: calc(var(--space-stack-tight) / 2);
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-heading);
+		color: var(--color-text-muted);
+		text-decoration: none;
+	}
+
+	.docs__toc-link--parent {
+		flex: 1 1 auto;
+		min-width: 0;
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.docs__toc-link:hover,
+	.docs__toc-link:focus-visible {
+		color: var(--color-primary);
+	}
+
+	.docs__toc-link.is-active,
+	.docs__toc-link[aria-current="location"] {
+		color: var(--color-primary);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.docs__main {
+		min-width: 0;
+	}
+
+	.docs-list {
+		margin: 0;
+		padding-inline-start: 1.25rem;
+	}
+
+	.docs-list :global(li) {
+		margin: 0;
+	}
+
+	@media screen and (max-width: 768px) {
+		.docs {
+			grid-template-columns: 1fr;
+		}
+
+		.docs__aside {
+			position: static;
+			max-height: none;
+			border-inline-end: none;
+			border-block-end: var(--border-default);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.docs__toc-summary::after {
+			transition: none;
+		}
+	}
+</style>

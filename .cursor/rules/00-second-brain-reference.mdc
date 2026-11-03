@@ -1,0 +1,19 @@
+---
+description: Pointer to the shared Cursor Second Brain knowledge repository
+alwaysApply: true
+---
+
+# Second Brain Reference
+
+Shared knowledge repository path:
+
+`/Users/anjobarros/Downloads/Repositories/second-brain`
+
+## How to use
+
+- Read `/Users/anjobarros/Downloads/Repositories/second-brain/AGENTS.md` for operating principles.
+- Consult architecture under `/Users/anjobarros/Downloads/Repositories/second-brain/architecture/`.
+- Search knowledge with: `npm run knowledge:search -- <query>` inside the Second Brain repo.
+- Project-specific rules in this `.cursor/rules/` directory override shared style defaults (not safety).
+
+Cursor does **not** automatically load rules from sibling repositories. Keep project-local rules here and open or reference the Second Brain as needed.

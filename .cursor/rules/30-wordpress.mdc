@@ -1,0 +1,29 @@
+---
+description: WordPress PHP, REST/GraphQL, and headless CMS security conventions
+globs: "**/*.php,**/wp-content/**/*,knowledge/wordpress/**/*.md"
+alwaysApply: false
+---
+
+# WordPress
+
+Apply only when working with WordPress themes, plugins, or headless WordPress integrations.
+
+## Security (non-negotiable)
+
+- Sanitize inputs; escape outputs.
+- Validate capabilities/permissions for protected operations.
+- Use nonces for form and AJAX actions where applicable.
+- Never commit or expose authentication secrets, application passwords, or tokens.
+
+## APIs
+
+- Prefer standard WordPress APIs over custom reinvention.
+- Use REST API or GraphQL according to the project’s established choice.
+- Reuse existing fetch/normalization utilities in headless setups.
+- Separate backend concerns (CPTs, fields, permissions) from frontend presentation.
+
+## Scope
+
+- Do not modify unrelated WordPress content, settings, or plugins.
+- Keep schema/content-model changes minimal and documented.
+- Account for missing fields and API failures in consumers.

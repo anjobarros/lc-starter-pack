@@ -1,0 +1,99 @@
+---
+/**
+ * Native details/summary accordion item with open/close icons.
+ */
+import Icon from "../atoms/Icon.astro";
+
+interface Props {
+	name?: string;
+	open?: boolean;
+	id?: string;
+	class?: string;
+}
+
+const { name, open = false, id, class: className } = Astro.props;
+---
+
+<details
+	id={id}
+	class:list={["accordion-item", className]}
+	name={name}
+	open={open}
+>
+	<summary class="accordion-item__summary">
+		<span class="accordion-item__title">
+			<slot name="title" />
+		</span>
+		<span class="accordion-item__icons" aria-hidden="true">
+			<Icon
+				class="accordion-item__icon accordion-item__icon--closed"
+				name="add-outline"
+				size={20}
+			/>
+			<Icon
+				class="accordion-item__icon accordion-item__icon--open"
+				name="close-outline"
+				size={20}
+			/>
+		</span>
+	</summary>
+	<div class="accordion-item__panel">
+		<slot name="body" />
+		<slot />
+	</div>
+</details>
+
+<style>
+	.accordion-item {
+		box-sizing: border-box;
+		width: 100%;
+		border-block-end: var(--border-default);
+	}
+
+	.accordion-item__summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-stack-tight);
+		width: 100%;
+		cursor: pointer;
+		list-style: none;
+		padding-block: var(--space-stack);
+		font-family: var(--font-family-primary);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.accordion-item__summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.accordion-item__title {
+		min-width: 0;
+		flex: 1 1 auto;
+	}
+
+	.accordion-item__icons {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-text);
+		line-height: 0;
+	}
+
+	.accordion-item__icons :global(.accordion-item__icon--open) {
+		display: none;
+	}
+
+	.accordion-item[open] .accordion-item__icons :global(.accordion-item__icon--closed) {
+		display: none;
+	}
+
+	.accordion-item[open] .accordion-item__icons :global(.accordion-item__icon--open) {
+		display: inline-flex;
+	}
+
+	.accordion-item__panel {
+		padding-block-end: var(--space-stack);
+	}
+</style>

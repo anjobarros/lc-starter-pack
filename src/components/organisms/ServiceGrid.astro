@@ -1,0 +1,39 @@
+---
+/**
+ * Scaffold: service cards collection. Compose ServiceCard children via default slot.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["service-grid", className]}>
+	<div class="service-grid__header">
+		<slot name="header" />
+	</div>
+	<div class="service-grid__items">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.service-grid {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.service-grid__header:empty {
+		display: none;
+	}
+
+	.service-grid__items {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+	}
+</style>

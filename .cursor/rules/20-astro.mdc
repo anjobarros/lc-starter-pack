@@ -1,0 +1,31 @@
+---
+description: Astro component, routing, and rendering conventions for Astro projects
+globs: "**/*.astro,**/astro.config.*"
+alwaysApply: false
+---
+
+# Astro
+
+Apply only in Astro projects. Prefer project conventions over inventing structure.
+
+## Defaults
+
+- Prefer pure Astro components (`.astro`) for presentational UI.
+- Type component props with TypeScript (`Props` interface / `Astro.props`).
+- Avoid React, Vue, Svelte, or other UI frameworks unless explicitly requested.
+- Avoid client-side JavaScript when HTML/CSS can achieve the same behavior.
+- Prefer server-rendered or statically generated HTML.
+- Separate layouts, components, pages, content, and utilities.
+
+## Practices
+
+- Follow Atomic Design and the section wrapper → container → column pattern.
+- Colocate styles with components unless the project uses a shared stylesheet/token system.
+- Use official Astro APIs; do not invent framework features or rely on outdated APIs.
+- Consult project `AGENTS.md` and [Astro docs](https://docs.astro.build) when unsure.
+
+## Anti-patterns
+
+- Shipping unnecessary `client:*` directives.
+- Mixing CMS fetch logic into presentational atoms.
+- Duplicating layout primitives per page.

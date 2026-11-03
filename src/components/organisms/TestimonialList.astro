@@ -1,0 +1,39 @@
+---
+/**
+ * Scaffold: testimonial collection. Compose TestimonialCard children via default slot.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["testimonial-list", className]}>
+	<div class="testimonial-list__header">
+		<slot name="header" />
+	</div>
+	<div class="testimonial-list__items">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.testimonial-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.testimonial-list__header:empty {
+		display: none;
+	}
+
+	.testimonial-list__items {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+	}
+</style>

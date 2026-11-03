@@ -1,0 +1,47 @@
+---
+/**
+ * List row: media (icon) → body (ContentBlock).
+ * `icon` slot kept as an alias of `media` for compatibility.
+ */
+interface Props {
+	as?: "li" | "div";
+	id?: string;
+	class?: string;
+}
+
+const { as: Tag = "li", id, class: className } = Astro.props;
+---
+
+<Tag id={id} class:list={["icon-list-item", className]}>
+	<span class="icon-list-item__media">
+		<slot name="media" />
+		<slot name="icon" />
+	</span>
+	<div class="icon-list-item__body">
+		<slot name="body" />
+	</div>
+</Tag>
+
+<style>
+	.icon-list-item {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-stack-tight);
+	}
+
+	.icon-list-item__media {
+		flex-shrink: 0;
+		line-height: 0;
+	}
+
+	.icon-list-item__media:empty {
+		display: none;
+	}
+
+	.icon-list-item__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+</style>

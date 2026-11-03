@@ -1,0 +1,33 @@
+---
+/**
+ * Scaffold: partner/client logos block (header + LogoGroup).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["logo-cloud", className]}>
+	<div class="logo-cloud__header">
+		<slot name="header" />
+	</div>
+	<div class="logo-cloud__logos">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.logo-cloud {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.logo-cloud__header:empty {
+		display: none;
+	}
+</style>

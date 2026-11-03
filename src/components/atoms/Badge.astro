@@ -1,0 +1,192 @@
+---
+interface Props {
+	as?: "span" | "div";
+	variant?: "solid" | "soft" | "outline";
+	tone?: "neutral" | "primary" | "success" | "warning" | "danger" | "info";
+	size?: "sm" | "md";
+	dot?: boolean;
+	id?: string;
+	class?: string;
+}
+
+const {
+	as: Tag = "span",
+	variant = "soft",
+	tone = "neutral",
+	size = "md",
+	dot = false,
+	id,
+	class: className,
+} = Astro.props;
+---
+
+<Tag
+	id={id}
+	class:list={["badge", className]}
+	data-variant={variant}
+	data-tone={tone}
+	data-size={size}
+>
+	{dot && <span class="badge__dot" aria-hidden="true"></span>}
+	<slot />
+</Tag>
+
+<style>
+	.badge {
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-1);
+		width: fit-content;
+		max-width: 100%;
+		border-width: var(--border-width);
+		border-style: var(--border-style);
+		border-radius: var(--radius-full);
+		font-family: var(--font-family-primary);
+		font-weight: var(--font-weight-semibold);
+		line-height: 1;
+		white-space: nowrap;
+	}
+
+	.badge[data-size="sm"] {
+		min-height: 20px;
+		padding-block: 2px;
+		padding-inline: var(--space-1);
+		font-size: var(--font-size-xs);
+	}
+
+	.badge[data-size="md"] {
+		min-height: 24px;
+		padding-block: var(--space-1);
+		padding-inline: var(--space-2);
+		font-size: var(--font-size-sm);
+	}
+
+	.badge :global(svg) {
+		display: block;
+		flex-shrink: 0;
+		width: 1em;
+		height: 1em;
+	}
+
+	.badge__dot {
+		display: block;
+		flex-shrink: 0;
+		width: 0.5em;
+		height: 0.5em;
+		border-radius: var(--radius-full);
+		background-color: currentColor;
+	}
+
+	/* Solid */
+	.badge[data-variant="solid"][data-tone="neutral"] {
+		border-color: var(--color-text);
+		background-color: var(--color-text);
+		color: var(--color-text-inverse);
+	}
+
+	.badge[data-variant="solid"][data-tone="primary"] {
+		border-color: var(--color-primary);
+		background-color: var(--color-primary);
+		color: var(--color-text-inverse);
+	}
+
+	.badge[data-variant="solid"][data-tone="success"] {
+		border-color: var(--color-success);
+		background-color: var(--color-success);
+		color: var(--color-text-inverse);
+	}
+
+	.badge[data-variant="solid"][data-tone="warning"] {
+		border-color: var(--color-warning);
+		background-color: var(--color-warning);
+		color: var(--color-text-inverse);
+	}
+
+	.badge[data-variant="solid"][data-tone="danger"] {
+		border-color: var(--color-danger);
+		background-color: var(--color-danger);
+		color: var(--color-text-inverse);
+	}
+
+	.badge[data-variant="solid"][data-tone="info"] {
+		border-color: var(--color-info);
+		background-color: var(--color-info);
+		color: var(--color-text-inverse);
+	}
+
+	/* Soft */
+	.badge[data-variant="soft"][data-tone="neutral"] {
+		border-color: transparent;
+		background-color: var(--color-surface-elevated);
+		color: var(--color-text);
+	}
+
+	.badge[data-variant="soft"][data-tone="primary"] {
+		border-color: transparent;
+		background-color: var(--color-primary-soft);
+		color: var(--color-accent);
+	}
+
+	.badge[data-variant="soft"][data-tone="success"] {
+		border-color: transparent;
+		background-color: var(--color-success-soft);
+		color: var(--color-success);
+	}
+
+	.badge[data-variant="soft"][data-tone="warning"] {
+		border-color: transparent;
+		background-color: var(--color-warning-soft);
+		color: var(--color-warning);
+	}
+
+	.badge[data-variant="soft"][data-tone="danger"] {
+		border-color: transparent;
+		background-color: var(--color-danger-soft);
+		color: var(--color-danger);
+	}
+
+	.badge[data-variant="soft"][data-tone="info"] {
+		border-color: transparent;
+		background-color: var(--color-info-soft);
+		color: var(--color-info);
+	}
+
+	/* Outline */
+	.badge[data-variant="outline"][data-tone="neutral"] {
+		border-color: var(--color-border-strong);
+		background-color: transparent;
+		color: var(--color-text);
+	}
+
+	.badge[data-variant="outline"][data-tone="primary"] {
+		border-color: var(--color-primary);
+		background-color: transparent;
+		color: var(--color-primary);
+	}
+
+	.badge[data-variant="outline"][data-tone="success"] {
+		border-color: var(--color-success);
+		background-color: transparent;
+		color: var(--color-success);
+	}
+
+	.badge[data-variant="outline"][data-tone="warning"] {
+		border-color: var(--color-warning);
+		background-color: transparent;
+		color: var(--color-warning);
+	}
+
+	.badge[data-variant="outline"][data-tone="danger"] {
+		border-color: var(--color-danger);
+		background-color: transparent;
+		color: var(--color-danger);
+	}
+
+	.badge[data-variant="outline"][data-tone="info"] {
+		border-color: var(--color-info);
+		background-color: transparent;
+		color: var(--color-info);
+	}
+</style>

@@ -1,0 +1,103 @@
+---
+/**
+ * Rich-text / CMS HTML wrapper. Styles nested headings, lists, links.
+ */
+interface Props {
+	as?: "div" | "article" | "section";
+	class?: string;
+}
+
+const { as: Tag = "div", class: className } = Astro.props;
+---
+
+<Tag class:list={["prose", className]}>
+	<slot />
+</Tag>
+
+<style>
+	.prose {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		width: 100%;
+		max-width: 100%;
+		color: var(--color-text);
+	}
+
+	.prose :global(> * + *) {
+		margin: 0;
+	}
+
+	.prose :global(p),
+	.prose :global(ul),
+	.prose :global(ol),
+	.prose :global(blockquote) {
+		margin: 0;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		padding-inline-start: 1.25em;
+	}
+
+	.prose :global(a) {
+		color: var(--color-link);
+	}
+
+	.prose :global(img) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+	}
+
+	.prose :global(table) {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 100%;
+		border-collapse: collapse;
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-body);
+	}
+
+	.prose :global(th),
+	.prose :global(td) {
+		padding: var(--space-stack-tight) var(--space-stack);
+		border: var(--border-default);
+		text-align: start;
+		vertical-align: top;
+	}
+
+	.prose :global(th) {
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+		background-color: var(--color-surface-elevated);
+	}
+
+	.prose :global(td) {
+		color: var(--color-text-muted);
+	}
+
+	.prose :global(pre) {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		margin: 0;
+		padding: var(--space-stack);
+		border: var(--border-default);
+		border-radius: var(--radius-md);
+		background-color: var(--color-surface-elevated);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-body);
+	}
+
+	.prose :global(code) {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-size: 0.92em;
+	}
+
+	.prose :global(pre code) {
+		font-size: inherit;
+	}
+</style>

@@ -1,0 +1,35 @@
+---
+/**
+ * Scaffold: horizontal/vertical group of Button atoms.
+ */
+interface Props {
+	orientation?: "horizontal" | "vertical";
+	id?: string;
+	class?: string;
+}
+
+const { orientation = "horizontal", id, class: className } = Astro.props;
+---
+
+<div
+	id={id}
+	class:list={["button-group", className]}
+	data-orientation={orientation}
+	role="group"
+>
+	<slot />
+</div>
+
+<style>
+	.button-group {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+
+	.button-group[data-orientation="vertical"] {
+		flex-direction: column;
+		align-items: stretch;
+	}
+</style>

@@ -1,0 +1,28 @@
+---
+/**
+ * Scaffold: section intro (eyebrow + heading + description).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<header id={id} class:list={["section-heading", className]}>
+	<slot name="eyebrow" />
+	<slot name="title" />
+	<slot name="description" />
+	<slot />
+</header>
+
+<style>
+	.section-heading {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-stack);
+		width: 100%;
+	}
+</style>

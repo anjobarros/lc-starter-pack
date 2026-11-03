@@ -1,0 +1,37 @@
+---
+/**
+ * Scaffold: breadcrumb navigation list.
+ * Pass items via default slot (typically <li><a>…</a></li>).
+ */
+interface Props {
+	label?: string;
+	id?: string;
+	class?: string;
+}
+
+const { label = "Breadcrumb", id, class: className } = Astro.props;
+---
+
+<nav id={id} class:list={["breadcrumbs", className]} aria-label={label}>
+	<ol class="breadcrumbs__list">
+		<slot />
+	</ol>
+</nav>
+
+<style>
+	.breadcrumbs__list {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.breadcrumbs__list :global(li:not(:last-child))::after {
+		content: "/";
+		margin-inline-start: var(--space-stack-tight);
+		color: var(--color-text-muted);
+	}
+</style>

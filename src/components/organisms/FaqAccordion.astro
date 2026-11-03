@@ -1,0 +1,40 @@
+---
+/**
+ * Scaffold: FAQ group. Compose AccordionItem children via default slot.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["faq-accordion", className]}>
+	<div class="faq-accordion__header">
+		<slot name="header" />
+	</div>
+	<div class="faq-accordion__items">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.faq-accordion {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	.faq-accordion__header:empty {
+		display: none;
+	}
+
+	.faq-accordion__items {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		width: 100%;
+	}
+</style>

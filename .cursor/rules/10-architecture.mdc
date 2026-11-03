@@ -1,0 +1,36 @@
+---
+description: Atomic Design, composition, naming, and content/presentation separation
+globs: "**/components/**/*.{astro,tsx,jsx,vue,svelte},**/sections/**/*.astro,**/layouts/**/*.astro,architecture/**/*.md"
+alwaysApply: false
+---
+
+# Architecture
+
+Reference: `architecture/atomic-design.md`, `architecture/section-structure.md`, `architecture/component-naming.md`.
+
+## Atomic Design
+
+- **Atoms**: single-purpose UI primitives (Button, Heading, Input).
+- **Molecules**: small combinations with one responsibility (Form Field, Text Block).
+- **Organisms**: reusable composites (Navigation, Hero Content, FAQ Accordion).
+- **Layouts**: `Section` (wrapper → container → slot) — separate from content components. Grids/columns live in content components.
+- **Pages**: assemble sections; do not duplicate reusable logic.
+
+## Composition rules
+
+- Reuse existing components before creating new ones.
+- Use variants for shared structure with different content.
+- Avoid giant components with unrelated conditionals.
+- Do not force simple UI into unnecessary abstraction layers.
+- Do not classify every nested component as an organism.
+
+## Separation of concerns
+
+- Content vs presentation: keep copy/data out of presentational styling logic when possible.
+- Data fetching vs UI: fetch/normalize upstream; render pure UI from typed props.
+- Section vs content: sections own layout boundaries and spacing; content components own presentation.
+
+## Naming
+
+- Name by responsibility (`SplitContent`, `FeatureGrid`), not page placement.
+- PascalCase component files; kebab-case CSS classes; camelCase JS/TS identifiers.

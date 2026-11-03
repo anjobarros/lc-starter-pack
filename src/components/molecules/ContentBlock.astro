@@ -1,0 +1,29 @@
+---
+/**
+ * Scaffold: eyebrow/title/body content stack.
+ * Compose Heading + Text atoms when wiring real content.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div id={id} class:list={["content-block", className]}>
+	<slot name="eyebrow" />
+	<slot name="title" />
+	<slot name="body" />
+	<slot />
+</div>
+
+<style>
+	.content-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-stack);
+		width: 100%;
+	}
+</style>

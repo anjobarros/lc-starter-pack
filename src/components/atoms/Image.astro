@@ -1,0 +1,186 @@
+---
+interface Props {
+	src?: string;
+	alt: string;
+	width?: number | string;
+	height?: number | string;
+	ratio?: string;
+	fit?: "cover" | "contain";
+	loading?: "lazy" | "eager";
+	decoding?: "async" | "auto" | "sync";
+	id?: string;
+	class?: string;
+}
+
+const {
+	src,
+	alt,
+	width,
+	height,
+	ratio,
+	fit = "cover",
+	loading = "lazy",
+	decoding = "async",
+	id,
+	class: className,
+} = Astro.props;
+
+const hasSrc = typeof src === "string" && src.trim().length > 0;
+const hasExplicitBox = width !== undefined && height !== undefined;
+const toCssSize = (value: number | string | undefined) => {
+	if (value === undefined) return undefined;
+	return typeof value === "number" ? `${value}px` : value;
+};
+
+const frameStyle = {
+	width: toCssSize(width),
+	height: toCssSize(height),
+	aspectRatio:
+		ratio ??
+		(hasExplicitBox && typeof width === "number" && typeof height === "number"
+			? `${width} / ${height}`
+			: undefined),
+};
+---
+
+<figure
+	id={id}
+	class:list={["image", className]}
+	data-image-root
+	data-state={hasSrc ? "loading" : "empty"}
+	data-fit={fit}
+	data-ratio-default={!frameStyle.aspectRatio && !hasExplicitBox ? "true" : undefined}
+	style={frameStyle}
+	aria-busy={hasSrc ? "true" : undefined}
+	aria-label={!hasSrc ? alt || "Image unavailable" : undefined}
+	role={!hasSrc ? "img" : undefined}
+>
+	<div class="image__skeleton" aria-hidden="true"></div>
+
+	{
+		hasSrc && (
+			<img
+				class="image__media"
+				src={src}
+				alt={alt}
+				width={width}
+				height={height}
+				loading={loading}
+				decoding={decoding}
+			/>
+		)
+	}
+</figure>
+
+<script>
+	function settleImage(root: HTMLElement) {
+		const media = root.querySelector<HTMLImageElement>("img");
+
+		if (!media) {
+			root.dataset.state = "empty";
+			root.removeAttribute("aria-busy");
+			return;
+		}
+
+		const markLoaded = () => {
+			root.dataset.state = "loaded";
+			root.setAttribute("aria-busy", "false");
+		};
+
+		const markEmpty = () => {
+			root.dataset.state = "empty";
+			root.removeAttribute("aria-busy");
+		};
+
+		if (media.complete) {
+			if (media.naturalWidth > 0) markLoaded();
+			else markEmpty();
+			return;
+		}
+
+		media.addEventListener("load", markLoaded, { once: true });
+		media.addEventListener("error", markEmpty, { once: true });
+	}
+
+	function initImages(scope: ParentNode = document) {
+		scope.querySelectorAll<HTMLElement>("[data-image-root]").forEach(settleImage);
+	}
+
+	initImages();
+	document.addEventListener("astro:page-load", () => initImages());
+</script>
+
+<style>
+	.image {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		margin: 0;
+		max-width: 100%;
+		border-radius: var(--radius-md);
+		background-color: var(--color-surface-elevated);
+	}
+
+	.image[data-ratio-default="true"] {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+	}
+
+	.image__skeleton {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			90deg,
+			var(--color-surface-elevated) 0%,
+			var(--color-border) 50%,
+			var(--color-surface-elevated) 100%
+		);
+		background-size: 200% 100%;
+		animation: image-skeleton-shimmer var(--duration-slow) var(--ease-standard) infinite;
+	}
+
+	.image__media {
+		position: relative;
+		z-index: var(--z-content);
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		opacity: 0;
+		transition: opacity var(--duration-normal) var(--ease-standard);
+	}
+
+	.image[data-fit="contain"] .image__media {
+		object-fit: contain;
+	}
+
+	.image[data-state="loaded"] .image__media {
+		opacity: 1;
+	}
+
+	.image[data-state="loaded"] .image__skeleton,
+	.image[data-state="empty"] .image__media {
+		display: none;
+	}
+
+	@keyframes image-skeleton-shimmer {
+		0% {
+			background-position: 200% 0;
+		}
+		100% {
+			background-position: -200% 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.image__skeleton {
+			animation: none;
+			background: var(--color-surface-elevated);
+		}
+
+		.image__media {
+			transition: none;
+		}
+	}
+</style>

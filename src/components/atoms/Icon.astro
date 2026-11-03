@@ -1,0 +1,78 @@
+---
+/**
+ * Inline SVG icon. Pass `name` for a file in `src/icons/`, or slot custom SVG.
+ */
+const iconModules = import.meta.glob("../../icons/*.svg", {
+	query: "?raw",
+	import: "default",
+	eager: true,
+}) as Record<string, string>;
+
+interface Props {
+	/** Icon filename without extension, from `src/icons/` (e.g. `add-outline`). */
+	name?: string;
+	/** Accessible name. Omit (or leave empty) for decorative icons. */
+	label?: string;
+	size?: number;
+	id?: string;
+	class?: string;
+}
+
+const { name, label, size = 24, id, class: className } = Astro.props;
+const isDecorative = !label;
+
+let svgMarkup = "";
+
+if (name) {
+	const key = `../../icons/${name}.svg`;
+	const raw = iconModules[key];
+
+	if (!raw) {
+		throw new Error(`Icon not found: src/icons/${name}.svg`);
+	}
+
+	svgMarkup = raw.replace(/<svg\b([^>]*)>/i, (_match, attrs: string) => {
+		const cleaned = attrs
+			.replace(/\s(?:width|height|aria-hidden|focusable)=["'][^"']*["']/gi, "")
+			.trim();
+		return `<svg ${cleaned} width="${size}" height="${size}" aria-hidden="true" focusable="false">`;
+	});
+}
+---
+
+<span
+	id={id}
+	class:list={["icon", className]}
+	role={isDecorative ? undefined : "img"}
+	aria-hidden={isDecorative ? "true" : undefined}
+	aria-label={isDecorative ? undefined : label}
+	style={`--icon-size: ${size}px`}
+>
+	{name ? <span class="icon__svg" set:html={svgMarkup} /> : <slot />}
+</span>
+
+<style>
+	.icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: var(--icon-size, 24px);
+		height: var(--icon-size, 24px);
+		line-height: 0;
+		color: currentColor;
+	}
+
+	.icon__svg,
+	.icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.icon__svg :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+</style>

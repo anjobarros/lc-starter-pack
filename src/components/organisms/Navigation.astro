@@ -1,0 +1,49 @@
+---
+/**
+ * Presentational nav shell (brand / links / actions slots). Pass link data from the page or Header.
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<nav id={id} class:list={["navigation", className]} aria-label="Primary">
+	<div class="navigation__brand">
+		<slot name="brand" />
+	</div>
+	<div class="navigation__links">
+		<slot name="links" />
+	</div>
+	<div class="navigation__actions">
+		<slot name="actions" />
+	</div>
+	<slot />
+</nav>
+
+<style>
+	.navigation {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-stack);
+		width: 100%;
+	}
+
+	.navigation__brand:empty,
+	.navigation__links:empty,
+	.navigation__actions:empty {
+		display: none;
+	}
+
+	.navigation__links,
+	.navigation__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+</style>

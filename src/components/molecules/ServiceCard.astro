@@ -1,0 +1,55 @@
+---
+/**
+ * Service offering: media → body (ContentBlock + meta) → footer (CTA).
+ */
+interface Props {
+	id?: string;
+	class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<article id={id} class:list={["service-card", className]}>
+	<div class="service-card__media">
+		<slot name="media" />
+	</div>
+	<div class="service-card__body">
+		<slot name="body" />
+	</div>
+	<div class="service-card__footer">
+		<slot name="footer" />
+	</div>
+</article>
+
+<style>
+	.service-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+
+	.service-card__media {
+		line-height: 0;
+	}
+
+	.service-card__media:empty,
+	.service-card__footer:empty {
+		display: none;
+	}
+
+	.service-card__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		min-width: 0;
+	}
+
+	.service-card__footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-stack-tight);
+	}
+</style>

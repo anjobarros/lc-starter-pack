@@ -1,0 +1,38 @@
+---
+/**
+ * Scaffold: row/grid of partner or client logos.
+ */
+interface Props {
+	label?: string;
+	id?: string;
+	class?: string;
+}
+
+const { label = "Logos", id, class: className } = Astro.props;
+---
+
+<div
+	id={id}
+	class:list={["logo-group", className]}
+	role="group"
+	aria-label={label}
+>
+	<slot />
+</div>
+
+<style>
+	.logo-group {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-start;
+		gap: var(--space-stack-loose);
+	}
+
+	.logo-group :global(img),
+	.logo-group :global(svg) {
+		display: block;
+		max-height: 48px;
+		width: auto;
+	}
+</style>

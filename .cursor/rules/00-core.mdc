@@ -1,0 +1,48 @@
+---
+description: Core Second Brain standards for scope, reuse, token efficiency, and safe edits
+alwaysApply: true
+---
+
+# Core Standards
+
+## Scope
+
+- Implement the smallest change that satisfies the request.
+- Do not modify unrelated files.
+- Do not rewrite working code without a specific reason.
+- Never silently introduce dependencies.
+
+## Quality
+
+- Prefer existing patterns and components over new abstractions.
+- Verify relevant source files before assuming APIs, paths, or components exist.
+- Handle errors at boundaries; fail clearly rather than silently.
+- Validate inputs at trust boundaries (user paths, CMS data, query params).
+
+## Reuse
+
+- Search for existing atoms, molecules, organisms, and utilities first.
+- Prefer variants and composition over duplicate components.
+- Prefer native framework and browser features over new libraries.
+
+## Token efficiency
+
+- Read only task-relevant docs and files.
+- Prefer targeted search over full-repo scans.
+- Do not reload unchanged files.
+- Keep responses short; use the completion-report format in `AGENTS.md`.
+
+## Response format
+
+```text
+Implemented:
+- …
+
+Validation:
+- …
+
+Notes:
+- …
+```
+
+Report validation only when it was actually run.

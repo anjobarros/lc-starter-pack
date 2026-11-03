@@ -1,0 +1,52 @@
+---
+/**
+ * Horizontal until items wrap; then stacks. Threshold via --switcher-threshold.
+ */
+interface Props {
+	gap?: "tight" | "stack" | "loose";
+	threshold?: string;
+	as?: "div" | "ul" | "ol" | "section";
+	class?: string;
+}
+
+const {
+	gap = "loose",
+	threshold = "30rem",
+	as: Tag = "div",
+	class: className,
+} = Astro.props;
+---
+
+<Tag
+	class:list={["switcher", className]}
+	data-gap={gap}
+	style={{ "--switcher-threshold": threshold }}
+>
+	<slot />
+</Tag>
+
+<style>
+	.switcher {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.switcher > :global(*) {
+		flex-grow: 1;
+		flex-basis: calc((var(--switcher-threshold) - 100%) * 999);
+		min-width: 0;
+	}
+
+	.switcher[data-gap="tight"] {
+		gap: var(--space-stack-tight);
+	}
+
+	.switcher[data-gap="stack"] {
+		gap: var(--space-stack);
+	}
+
+	.switcher[data-gap="loose"] {
+		gap: var(--space-stack-loose);
+	}
+</style>

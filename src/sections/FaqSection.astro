@@ -1,0 +1,22 @@
+---
+/**
+ * Scaffold: FAQ section. Compose FaqAccordion via default slot.
+ */
+import Section from "../components/layouts/Section.astro";
+import Container from "../components/layouts/Container.astro";
+import type { ContainerWidth } from "../types/content";
+
+interface Props {
+	id: string;
+	width?: ContainerWidth;
+	class?: string;
+}
+
+const { id, width = "narrow", class: className } = Astro.props;
+---
+
+<Section id={id} class:list={["faq-section", className]}>
+	<Container width={width}>
+		<slot />
+	</Container>
+</Section>

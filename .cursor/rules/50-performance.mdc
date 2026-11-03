@@ -1,0 +1,21 @@
+---
+description: Performance defaults for assets, JavaScript, and dependency hygiene
+globs: "**/*.{astro,html,js,ts,tsx,jsx,css,php},**/public/**/*"
+alwaysApply: false
+---
+
+# Performance
+
+## Defaults
+
+- Minimize unnecessary JavaScript and client hydration.
+- Avoid unused dependencies; never add packages without an explicit need.
+- Optimize images and static assets (appropriate format, dimensions, lazy loading when suitable).
+- Prefer native browser functionality over libraries.
+- Preserve accessibility while optimizing.
+
+## Discipline
+
+- Avoid premature optimization.
+- Measure or verify performance claims when possible (Lighthouse, bundle analysis, network tab).
+- Do not trade correctness or accessibility for micro-optimizations.

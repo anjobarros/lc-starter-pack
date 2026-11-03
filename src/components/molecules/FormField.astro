@@ -1,0 +1,97 @@
+---
+/**
+ * Scaffold: label + control + hint/error (Input atom + Text).
+ */
+interface Props {
+	for: string;
+	required?: boolean;
+	status?: "default" | "error" | "success";
+	id?: string;
+	class?: string;
+}
+
+const {
+	for: htmlFor,
+	required = false,
+	status = "default",
+	id,
+	class: className,
+} = Astro.props;
+---
+
+<div
+	id={id}
+	class:list={["form-field", className]}
+	data-status={status}
+	data-required={required ? "true" : undefined}
+>
+	<label class="form-field__label" for={htmlFor}>
+		<slot name="label" />
+		{required && <span class="form-field__required" aria-hidden="true">*</span>}
+	</label>
+
+	<div class="form-field__control">
+		<slot />
+	</div>
+
+	<p class="form-field__hint">
+		<slot name="hint" />
+	</p>
+
+	<p class="form-field__error" role="alert">
+		<slot name="error" />
+	</p>
+</div>
+
+<style>
+	.form-field {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--space-stack-tight);
+		width: 100%;
+	}
+
+	.form-field__label {
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.form-field__required {
+		margin-inline-start: 0.25em;
+		color: var(--color-danger);
+	}
+
+	.form-field__control {
+		min-width: 0;
+	}
+
+	.form-field__hint,
+	.form-field__error {
+		margin: 0;
+		font-size: var(--font-size-xs);
+	}
+
+	.form-field__hint {
+		color: var(--color-text-muted);
+	}
+
+	.form-field__error {
+		color: var(--color-danger);
+	}
+
+	.form-field__hint:empty,
+	.form-field__error:empty {
+		display: none;
+	}
+
+	.form-field[data-status="error"] .form-field__label {
+		color: var(--color-danger);
+	}
+
+	.form-field[data-status="success"] .form-field__hint {
+		color: var(--color-success);
+	}
+</style>

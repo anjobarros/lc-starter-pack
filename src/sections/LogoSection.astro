@@ -1,0 +1,22 @@
+---
+/**
+ * Scaffold: logo cloud section. Compose LogoCloud via default slot.
+ */
+import Section from "../components/layouts/Section.astro";
+import Container from "../components/layouts/Container.astro";
+import type { ContainerWidth } from "../types/content";
+
+interface Props {
+	id: string;
+	width?: ContainerWidth;
+	class?: string;
+}
+
+const { id, width = "default", class: className } = Astro.props;
+---
+
+<Section id={id} class:list={["logo-section", className]}>
+	<Container width={width}>
+		<slot />
+	</Container>
+</Section>
