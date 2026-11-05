@@ -28,6 +28,12 @@ import SectionHeading from "../components/molecules/SectionHeading.astro";
 import ServiceCard from "../components/molecules/ServiceCard.astro";
 import TeamCard from "../components/molecules/TeamCard.astro";
 import TestimonialCard from "../components/molecules/TestimonialCard.astro";
+import CtaBanner from "../components/organisms/CtaBanner.astro";
+import FaqAccordion from "../components/organisms/FaqAccordion.astro";
+import FeatureGrid from "../components/organisms/FeatureGrid.astro";
+import Hero from "../components/organisms/Hero.astro";
+import LogoCloud from "../components/organisms/LogoCloud.astro";
+import MediaSplit from "../components/organisms/MediaSplit.astro";
 import { brandkitToc } from "../data/brandkitToc";
 import "../styles/global.css";
 ---
@@ -88,7 +94,10 @@ import "../styles/global.css";
 				<Section id="intro" aria-labelledby="heading-brandkit">
 					<Container>
 						<Heading level={1} id="heading-brandkit">Brandkit</Heading>
-						<Text>Atom, molecule, and content-layout reference for this project.</Text>
+						<Text>
+							Atomic Design reference: atoms, molecules, organisms (Hero, CTA, Features,
+							Split), and content layout helpers — not page-only section wiring.
+						</Text>
 					</Container>
 				</Section>
 
@@ -434,8 +443,14 @@ import "../styles/global.css";
 
 				<Section id="molecules" aria-labelledby="heading-molecules">
 					<Container>
-						<Heading level={2} id="heading-molecules">Molecules</Heading>
-						<Text>Composed atom patterns used as reusable content blocks.</Text>
+						<ContentBlock>
+							<Heading slot="title" level={2} id="heading-molecules">Molecules</Heading>
+							<Text slot="body">
+								Focused atom combinations with one responsibility (cards, content stacks,
+								button groups). Not full page compositions — Hero, CTA, Feature grids, and
+								Split content live under Organisms.
+							</Text>
+						</ContentBlock>
 					</Container>
 
 					<Container class="atom-container" id="molecule-content-block" aria-labelledby="heading-content-block">
@@ -650,14 +665,188 @@ import "../styles/global.css";
 					</Container>
 				</Section>
 
+				<Section id="organisms" aria-labelledby="heading-organisms">
+					<Container>
+						<ContentBlock>
+							<Heading slot="title" level={2} id="heading-organisms">Organisms</Heading>
+							<Text slot="body">
+								Reusable section compositions (sometimes called section organisms). They sit
+								inside <code>Section</code> → <code>Container</code>, compose molecules and
+								content helpers, and are <strong>not</strong> the Section wrapper. Keep them in
+								<code>components/organisms/</code> — not molecules, <code>content/</code>, or
+								<code>src/sections/</code> (page wiring only).
+							</Text>
+						</ContentBlock>
+					</Container>
+
+					<Container class="atom-container" id="organism-hero" aria-labelledby="heading-organism-hero">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-hero">Hero</Heading>
+							<Text slot="body">
+								Intro + actions + media. Compose with ContentBlock, ButtonGroup, and Image —
+								not a Section wrapper.
+							</Text>
+						</ContentBlock>
+						<Hero>
+							<ContentBlock slot="content">
+								<Badge slot="eyebrow" tone="primary">Brandkit</Badge>
+								<Heading slot="title" level={3}>Hero composition</Heading>
+								<Text slot="body">Primary intro for a page or campaign band.</Text>
+							</ContentBlock>
+							<ButtonGroup slot="actions">
+								<Button href="/brandkit">Primary action</Button>
+								<Button href="/docs" variant="outline">Secondary</Button>
+							</ButtonGroup>
+							<Image
+								slot="media"
+								src="/favicon.svg"
+								alt="Sample hero media"
+								width={160}
+								height={160}
+								fit="contain"
+							/>
+						</Hero>
+					</Container>
+
+					<Container class="atom-container" id="organism-cta-banner" aria-labelledby="heading-organism-cta">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-cta">CtaBanner</Heading>
+							<Text slot="body">
+								Call-to-action band: meaning in content, next step in actions.
+							</Text>
+						</ContentBlock>
+						<CtaBanner>
+							<ContentBlock slot="content">
+								<Heading slot="title" level={3}>Ready to build the next section?</Heading>
+								<Text slot="body">Reuse this organism instead of inventing a one-off CTA layout.</Text>
+							</ContentBlock>
+							<ButtonGroup slot="actions">
+								<Button href="/docs">Read the docs</Button>
+								<Button href="/brandkit" variant="outline">Stay on Brandkit</Button>
+							</ButtonGroup>
+						</CtaBanner>
+					</Container>
+
+					<Container class="atom-container" id="organism-feature-grid" aria-labelledby="heading-organism-features">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-features">FeatureGrid</Heading>
+							<Text slot="body">
+								Header plus a collection of FeatureCard molecules.
+							</Text>
+						</ContentBlock>
+						<FeatureGrid>
+							<SectionHeading slot="header">
+								<Badge slot="eyebrow" tone="info">Features</Badge>
+								<Heading slot="title" level={3}>Feature grid</Heading>
+								<Text slot="description">Organism owns the collection; cards stay molecules.</Text>
+							</SectionHeading>
+							<FeatureCard>
+								<Icon slot="media" name="star-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Composable</Heading>
+									<Text slot="body">Build from existing molecules and tokens.</Text>
+								</ContentBlock>
+							</FeatureCard>
+							<FeatureCard>
+								<Icon slot="media" name="checkmark-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Consistent</Heading>
+									<Text slot="body">Same shell across marketing pages.</Text>
+								</ContentBlock>
+							</FeatureCard>
+							<FeatureCard>
+								<Icon slot="media" name="settings-outline" label="Feature" size={28} />
+								<ContentBlock slot="body">
+									<Heading slot="title" level={4}>Scaffold-ready</Heading>
+									<Text slot="body">Fits the section organism patterns.</Text>
+								</ContentBlock>
+							</FeatureCard>
+						</FeatureGrid>
+					</Container>
+
+					<Container class="atom-container" id="organism-media-split" aria-labelledby="heading-organism-split">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-split">MediaSplit</Heading>
+							<Text slot="body">
+								Split media + content (optional reverse). Layout lives here, not in Section.
+							</Text>
+						</ContentBlock>
+						<MediaSplit>
+							<Image
+								slot="media"
+								src="/favicon.svg"
+								alt="Split media"
+								width={160}
+								height={160}
+								fit="contain"
+							/>
+							<ContentBlock slot="content">
+								<Heading slot="title" level={3}>Split content</Heading>
+								<Text slot="body">Pair copy with media without inventing a new section shell.</Text>
+							</ContentBlock>
+							<ButtonGroup slot="actions">
+								<Button href="/brandkit" variant="outline">Learn more</Button>
+							</ButtonGroup>
+						</MediaSplit>
+					</Container>
+
+					<Container class="atom-container" id="organism-faq-accordion" aria-labelledby="heading-organism-faq">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-faq">FaqAccordion</Heading>
+							<Text slot="body">
+								FAQ group: header plus AccordionItem molecules.
+							</Text>
+						</ContentBlock>
+						<FaqAccordion>
+							<SectionHeading slot="header">
+								<Heading slot="title" level={3}>FAQ accordion</Heading>
+								<Text slot="description">Organism wraps the list; items stay molecules.</Text>
+							</SectionHeading>
+							<AccordionItem name="brandkit-organism-faq" open>
+								<span slot="title">Where do Hero and CTA live?</span>
+								<Text slot="body">
+									Under <code>components/organisms/</code>, inside Section → Container.
+								</Text>
+							</AccordionItem>
+							<AccordionItem name="brandkit-organism-faq">
+								<span slot="title">Is content/ for page sections?</span>
+								<Text slot="body">
+									No — Stack, Cluster, and Grid are layout helpers only.
+								</Text>
+							</AccordionItem>
+						</FaqAccordion>
+					</Container>
+
+					<Container class="atom-container" id="organism-logo-cloud" aria-labelledby="heading-organism-logos">
+						<ContentBlock>
+							<Heading slot="title" level={3} id="heading-organism-logos">LogoCloud</Heading>
+							<Text slot="body">
+								Partner/client logos: header plus LogoGroup.
+							</Text>
+						</ContentBlock>
+						<LogoCloud>
+							<SectionHeading slot="header">
+								<Heading slot="title" level={3}>Logo cloud</Heading>
+								<Text slot="description">Trusted by teams using this starter.</Text>
+							</SectionHeading>
+							<LogoGroup label="Partner logos">
+								<Image src="/favicon.svg" alt="Logo A" width={48} height={48} fit="contain" />
+								<Image src="/favicon.svg" alt="Logo B" width={48} height={48} fit="contain" />
+								<Image src="/favicon.svg" alt="Logo C" width={48} height={48} fit="contain" />
+							</LogoGroup>
+						</LogoCloud>
+					</Container>
+				</Section>
+
 				<Section id="content" aria-labelledby="heading-content">
 					<Container>
 						<ContentBlock>
 							<Heading slot="title" level={2} id="heading-content">Content</Heading>
 							<Text slot="body">
-								Internal layout primitives for stacking, wrapping, and multi-column content
-								inside a Container. Use Stack, Cluster, and Grid — not Section/Container — for
-								flex and grid inside page content.
+								Content <strong>layout helpers</strong> (Stack, Cluster, Grid) for stacking,
+								wrapping, and multi-column layouts inside a Container. Not Hero, CTA, Feature,
+								or Split compositions — those are organisms. Use these helpers — not
+								Section/Container — for flex and grid inside page content.
 							</Text>
 						</ContentBlock>
 					</Container>

@@ -40,6 +40,18 @@ export const brandkitToc: NavLink[] = [
 		],
 	},
 	{
+		href: "#organisms",
+		label: "Organisms",
+		children: [
+			{ href: "#organism-hero", label: "Hero" },
+			{ href: "#organism-cta-banner", label: "CtaBanner" },
+			{ href: "#organism-feature-grid", label: "FeatureGrid" },
+			{ href: "#organism-media-split", label: "MediaSplit" },
+			{ href: "#organism-faq-accordion", label: "FaqAccordion" },
+			{ href: "#organism-logo-cloud", label: "LogoCloud" },
+		],
+	},
+	{
 		href: "#content",
 		label: "Content",
 		children: [
