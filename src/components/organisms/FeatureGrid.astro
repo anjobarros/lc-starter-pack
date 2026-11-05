@@ -3,14 +3,19 @@
  * Scaffold: feature cards collection. Compose FeatureCard children via default slot.
  */
 interface Props {
+	columns?: 2 | 3 | 4;
 	id?: string;
 	class?: string;
 }
 
-const { id, class: className } = Astro.props;
+const { columns = 3, id, class: className } = Astro.props;
 ---
 
-<div id={id} class:list={["feature-grid", className]}>
+<div
+	id={id}
+	class:list={["feature-grid", className]}
+	style={{ "--feature-grid-columns": String(columns) }}
+>
 	<div class="feature-grid__header">
 		<slot name="header" />
 	</div>
@@ -32,8 +37,21 @@ const { id, class: className } = Astro.props;
 	}
 
 	.feature-grid__items {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(var(--feature-grid-columns, 3), minmax(0, 1fr));
 		gap: var(--space-stack-loose);
+		width: 100%;
+	}
+
+	@media screen and (max-width: 1024px) {
+		.feature-grid__items {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.feature-grid__items {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

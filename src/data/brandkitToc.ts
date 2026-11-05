@@ -48,7 +48,6 @@ export const brandkitToc: NavLink[] = [
 			{ href: "#organism-feature-grid", label: "FeatureGrid" },
 			{ href: "#organism-media-split", label: "MediaSplit" },
 			{ href: "#organism-faq-accordion", label: "FaqAccordion" },
-			{ href: "#organism-logo-cloud", label: "LogoCloud" },
 		],
 	},
 	{

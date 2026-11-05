@@ -25,9 +25,10 @@ const { id, class: className } = Astro.props;
 
 <style>
 	.hero {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
 		gap: var(--space-stack-loose);
+		align-items: center;
 		width: 100%;
 	}
 
@@ -45,8 +46,23 @@ const { id, class: className } = Astro.props;
 		gap: var(--space-stack-tight);
 	}
 
+	.hero__media {
+		min-width: 0;
+		justify-self: center;
+	}
+
 	.hero__actions:empty,
 	.hero__media:empty {
 		display: none;
+	}
+
+	@media screen and (max-width: 1024px) {
+		.hero {
+			grid-template-columns: 1fr;
+		}
+
+		.hero__media {
+			justify-self: start;
+		}
 	}
 </style>

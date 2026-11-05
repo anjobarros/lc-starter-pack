@@ -22,9 +22,10 @@ const { id, class: className } = Astro.props;
 
 <style>
 	.cta-banner {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
 		gap: var(--space-stack-loose);
+		align-items: center;
 		width: 100%;
 	}
 
@@ -39,11 +40,22 @@ const { id, class: className } = Astro.props;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
+		justify-content: flex-end;
 		gap: var(--space-stack-tight);
 	}
 
 	.cta-banner__content:empty,
 	.cta-banner__actions:empty {
 		display: none;
+	}
+
+	@media screen and (max-width: 768px) {
+		.cta-banner {
+			grid-template-columns: 1fr;
+		}
+
+		.cta-banner__actions {
+			justify-content: flex-start;
+		}
 	}
 </style>

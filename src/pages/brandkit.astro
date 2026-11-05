@@ -32,7 +32,6 @@ import CtaBanner from "../components/organisms/CtaBanner.astro";
 import FaqAccordion from "../components/organisms/FaqAccordion.astro";
 import FeatureGrid from "../components/organisms/FeatureGrid.astro";
 import Hero from "../components/organisms/Hero.astro";
-import LogoCloud from "../components/organisms/LogoCloud.astro";
 import MediaSplit from "../components/organisms/MediaSplit.astro";
 import { brandkitToc } from "../data/brandkitToc";
 import "../styles/global.css";
@@ -683,111 +682,126 @@ import "../styles/global.css";
 						<ContentBlock>
 							<Heading slot="title" level={3} id="heading-organism-hero">Hero</Heading>
 							<Text slot="body">
-								Intro + actions + media. Compose with ContentBlock, ButtonGroup, and Image —
+								Desktop content | media grid with CTAs under the intro; stacks at
+								<code>1024px</code>. Compose with ContentBlock, ButtonGroup, and Image —
 								not a Section wrapper.
 							</Text>
 						</ContentBlock>
-						<Hero>
-							<ContentBlock slot="content">
-								<Badge slot="eyebrow" tone="primary">Brandkit</Badge>
-								<Heading slot="title" level={3}>Hero composition</Heading>
-								<Text slot="body">Primary intro for a page or campaign band.</Text>
-							</ContentBlock>
-							<ButtonGroup slot="actions">
-								<Button href="/brandkit">Primary action</Button>
-								<Button href="/docs" variant="outline">Secondary</Button>
-							</ButtonGroup>
-							<Image
-								slot="media"
-								src="/favicon.svg"
-								alt="Sample hero media"
-								width={160}
-								height={160}
-								fit="contain"
-							/>
-						</Hero>
+						<div class="brandkit-demo">
+							<Hero>
+								<ContentBlock slot="content">
+									<Badge slot="eyebrow" tone="primary">Brandkit</Badge>
+									<Heading slot="title" level={2}>Build Clear, Reusable Page Sections</Heading>
+									<Text slot="body">
+										Primary intro for a page or campaign band — copy and actions on one side,
+										media on the other.
+									</Text>
+								</ContentBlock>
+								<ButtonGroup slot="actions">
+									<Button href="/brandkit">Primary action</Button>
+									<Button href="/docs" variant="outline">Secondary</Button>
+								</ButtonGroup>
+								<Image
+									slot="media"
+									src="/favicon.svg"
+									alt="Sample hero media"
+									width={320}
+									height={320}
+									fit="contain"
+								/>
+							</Hero>
+						</div>
 					</Container>
 
 					<Container class="atom-container" id="organism-cta-banner" aria-labelledby="heading-organism-cta">
 						<ContentBlock>
 							<Heading slot="title" level={3} id="heading-organism-cta">CtaBanner</Heading>
 							<Text slot="body">
-								Call-to-action band: meaning in content, next step in actions.
+								Call-to-action band on a desktop grid (copy | actions); stacks at
+								<code>768px</code>. Meaning in content, next step in actions.
 							</Text>
 						</ContentBlock>
-						<CtaBanner>
-							<ContentBlock slot="content">
-								<Heading slot="title" level={3}>Ready to build the next section?</Heading>
-								<Text slot="body">Reuse this organism instead of inventing a one-off CTA layout.</Text>
-							</ContentBlock>
-							<ButtonGroup slot="actions">
-								<Button href="/docs">Read the docs</Button>
-								<Button href="/brandkit" variant="outline">Stay on Brandkit</Button>
-							</ButtonGroup>
-						</CtaBanner>
+						<div class="brandkit-demo">
+							<CtaBanner>
+								<ContentBlock slot="content">
+									<Heading slot="title" level={3}>Ready to build the next section?</Heading>
+									<Text slot="body">Reuse this organism instead of inventing a one-off CTA layout.</Text>
+								</ContentBlock>
+								<ButtonGroup slot="actions">
+									<Button href="/docs">Read the docs</Button>
+									<Button href="/brandkit" variant="outline">Stay on Brandkit</Button>
+								</ButtonGroup>
+							</CtaBanner>
+						</div>
 					</Container>
 
 					<Container class="atom-container" id="organism-feature-grid" aria-labelledby="heading-organism-features">
 						<ContentBlock>
 							<Heading slot="title" level={3} id="heading-organism-features">FeatureGrid</Heading>
 							<Text slot="body">
-								Header plus a collection of FeatureCard molecules.
+								Header plus FeatureCard molecules in a multi-column grid (default 3;
+								2 at <code>1024px</code>, 1 at <code>768px</code>).
 							</Text>
 						</ContentBlock>
-						<FeatureGrid>
-							<SectionHeading slot="header">
-								<Badge slot="eyebrow" tone="info">Features</Badge>
-								<Heading slot="title" level={3}>Feature grid</Heading>
-								<Text slot="description">Organism owns the collection; cards stay molecules.</Text>
-							</SectionHeading>
-							<FeatureCard>
-								<Icon slot="media" name="star-outline" label="Feature" size={28} />
-								<ContentBlock slot="body">
-									<Heading slot="title" level={4}>Composable</Heading>
-									<Text slot="body">Build from existing molecules and tokens.</Text>
-								</ContentBlock>
-							</FeatureCard>
-							<FeatureCard>
-								<Icon slot="media" name="checkmark-outline" label="Feature" size={28} />
-								<ContentBlock slot="body">
-									<Heading slot="title" level={4}>Consistent</Heading>
-									<Text slot="body">Same shell across marketing pages.</Text>
-								</ContentBlock>
-							</FeatureCard>
-							<FeatureCard>
-								<Icon slot="media" name="settings-outline" label="Feature" size={28} />
-								<ContentBlock slot="body">
-									<Heading slot="title" level={4}>Scaffold-ready</Heading>
-									<Text slot="body">Fits the section organism patterns.</Text>
-								</ContentBlock>
-							</FeatureCard>
-						</FeatureGrid>
+						<div class="brandkit-demo">
+							<FeatureGrid>
+								<SectionHeading slot="header">
+									<Badge slot="eyebrow" tone="info">Features</Badge>
+									<Heading slot="title" level={3}>Feature grid</Heading>
+									<Text slot="description">Organism owns the collection; cards stay molecules.</Text>
+								</SectionHeading>
+								<FeatureCard>
+									<Icon slot="media" name="star-outline" label="Feature" size={28} />
+									<ContentBlock slot="body">
+										<Heading slot="title" level={4}>Composable</Heading>
+										<Text slot="body">Build from existing molecules and tokens.</Text>
+									</ContentBlock>
+								</FeatureCard>
+								<FeatureCard>
+									<Icon slot="media" name="checkmark-outline" label="Feature" size={28} />
+									<ContentBlock slot="body">
+										<Heading slot="title" level={4}>Consistent</Heading>
+										<Text slot="body">Same shell across marketing pages.</Text>
+									</ContentBlock>
+								</FeatureCard>
+								<FeatureCard>
+									<Icon slot="media" name="settings-outline" label="Feature" size={28} />
+									<ContentBlock slot="body">
+										<Heading slot="title" level={4}>Scaffold-ready</Heading>
+										<Text slot="body">Fits the section organism patterns.</Text>
+									</ContentBlock>
+								</FeatureCard>
+							</FeatureGrid>
+						</div>
 					</Container>
 
 					<Container class="atom-container" id="organism-media-split" aria-labelledby="heading-organism-split">
 						<ContentBlock>
 							<Heading slot="title" level={3} id="heading-organism-split">MediaSplit</Heading>
 							<Text slot="body">
-								Split media + content (optional reverse). Layout lives here, not in Section.
+								Two-column media | content grid on desktop (<code>reverse</code> swaps
+								order); stacks at <code>1024px</code>. Layout lives here, not in Section.
 							</Text>
 						</ContentBlock>
-						<MediaSplit>
-							<Image
-								slot="media"
-								src="/favicon.svg"
-								alt="Split media"
-								width={160}
-								height={160}
-								fit="contain"
-							/>
-							<ContentBlock slot="content">
-								<Heading slot="title" level={3}>Split content</Heading>
-								<Text slot="body">Pair copy with media without inventing a new section shell.</Text>
-							</ContentBlock>
-							<ButtonGroup slot="actions">
-								<Button href="/brandkit" variant="outline">Learn more</Button>
-							</ButtonGroup>
-						</MediaSplit>
+						<div class="brandkit-demo">
+							<MediaSplit>
+								<Image
+									slot="media"
+									src="/favicon.svg"
+									alt="Split media"
+									width={280}
+									height={280}
+									fit="contain"
+								/>
+								<ContentBlock slot="content">
+									<Heading slot="title" level={3}>Split content</Heading>
+									<Text slot="body">Pair copy with media without inventing a new section shell.</Text>
+								</ContentBlock>
+								<ButtonGroup slot="actions">
+									<Button href="/brandkit" variant="outline">Learn more</Button>
+								</ButtonGroup>
+							</MediaSplit>
+						</div>
 					</Container>
 
 					<Container class="atom-container" id="organism-faq-accordion" aria-labelledby="heading-organism-faq">
@@ -797,45 +811,28 @@ import "../styles/global.css";
 								FAQ group: header plus AccordionItem molecules.
 							</Text>
 						</ContentBlock>
-						<FaqAccordion>
-							<SectionHeading slot="header">
-								<Heading slot="title" level={3}>FAQ accordion</Heading>
-								<Text slot="description">Organism wraps the list; items stay molecules.</Text>
-							</SectionHeading>
-							<AccordionItem name="brandkit-organism-faq" open>
-								<span slot="title">Where do Hero and CTA live?</span>
-								<Text slot="body">
-									Under <code>components/organisms/</code>, inside Section → Container.
-								</Text>
-							</AccordionItem>
-							<AccordionItem name="brandkit-organism-faq">
-								<span slot="title">Is content/ for page sections?</span>
-								<Text slot="body">
-									No — Stack, Cluster, and Grid are layout helpers only.
-								</Text>
-							</AccordionItem>
-						</FaqAccordion>
+						<div class="brandkit-demo">
+							<FaqAccordion>
+								<SectionHeading slot="header">
+									<Heading slot="title" level={3}>FAQ accordion</Heading>
+									<Text slot="description">Organism wraps the list; items stay molecules.</Text>
+								</SectionHeading>
+								<AccordionItem name="brandkit-organism-faq" open>
+									<span slot="title">Where do Hero and CTA live?</span>
+									<Text slot="body">
+										Under <code>components/organisms/</code>, inside Section → Container.
+									</Text>
+								</AccordionItem>
+								<AccordionItem name="brandkit-organism-faq">
+									<span slot="title">Is content/ for page sections?</span>
+									<Text slot="body">
+										No — Stack, Cluster, and Grid are layout helpers only.
+									</Text>
+								</AccordionItem>
+							</FaqAccordion>
+						</div>
 					</Container>
 
-					<Container class="atom-container" id="organism-logo-cloud" aria-labelledby="heading-organism-logos">
-						<ContentBlock>
-							<Heading slot="title" level={3} id="heading-organism-logos">LogoCloud</Heading>
-							<Text slot="body">
-								Partner/client logos: header plus LogoGroup.
-							</Text>
-						</ContentBlock>
-						<LogoCloud>
-							<SectionHeading slot="header">
-								<Heading slot="title" level={3}>Logo cloud</Heading>
-								<Text slot="description">Trusted by teams using this starter.</Text>
-							</SectionHeading>
-							<LogoGroup label="Partner logos">
-								<Image src="/favicon.svg" alt="Logo A" width={48} height={48} fit="contain" />
-								<Image src="/favicon.svg" alt="Logo B" width={48} height={48} fit="contain" />
-								<Image src="/favicon.svg" alt="Logo C" width={48} height={48} fit="contain" />
-							</LogoGroup>
-						</LogoCloud>
-					</Container>
 				</Section>
 
 				<Section id="content" aria-labelledby="heading-content">
@@ -1121,12 +1118,36 @@ import "../styles/global.css";
 		background-color: var(--color-surface);
 	}
 
-	:global(.atom-container .content-block) {
+	:global(.atom-container > .content-block:first-child) {
 		max-width: 42rem;
+		padding-block-end: var(--space-stack);
+		border-block-end: var(--border-default);
 	}
 
-	:global(.atom-container .content-block .text),
-	:global(.atom-container .content-block p) {
+	:global(.atom-container > .content-block:first-child .text),
+	:global(.atom-container > .content-block:first-child p) {
+		color: var(--color-text-muted);
+	}
+
+	.brandkit-demo {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-stack);
+		width: 100%;
+		padding: var(--space-5);
+		border: var(--border-default);
+		border-radius: var(--radius-md);
+		background-color: var(--color-surface-elevated);
+	}
+
+	.brandkit-demo::before {
+		content: "Example";
+		font-family: var(--font-family-primary);
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-weight-semibold);
+		letter-spacing: 0.04em;
+		line-height: var(--line-height-heading);
+		text-transform: uppercase;
 		color: var(--color-text-muted);
 	}
 
